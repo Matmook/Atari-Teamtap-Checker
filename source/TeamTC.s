@@ -43,7 +43,7 @@
 
     ; up test
     move.l  a1, a0
-    adda.l  #160*7,a0
+    adda.l  #160*(155+7)+(16/2),a0
 
     btst    #8,d6
     beq.s   .up
@@ -55,7 +55,7 @@
 
     ; down test
     move.l  a1, a0
-    adda.l  #160*14,a0
+    adda.l  #160*(155+14)+(16/2),a0
 
     btst    #9,d6
     beq.s   .down
@@ -67,7 +67,7 @@
 
     ; left test
     move.l  a1, a0
-    adda.l  #160*10,a0
+    adda.l  #160*(155+10)+(16/2),a0
 
     btst    #10,d6
     beq.s   .left
@@ -79,7 +79,7 @@
 
     ; right test
     move.l  a1, a0
-    adda.l  #160*10,a0
+    adda.l  #160*(155+10)+(16/2),a0
 
     btst    #11,d6
     beq.s   .right
@@ -90,47 +90,65 @@
 .endright:
 
     move.l  a1, a0
-    adda.l  #((160*14)+(16/2)),a0
+    adda.l  #((160*(155+14))+(32/2)),a0
     jsr     pause_on
 
     move.l  a1, a0
-    adda.l  #((160*14)+(16/2)),a0
+    adda.l  #((160*(155+14))+(32/2)),a0
     jsr     option_on
 
     move.l  a1, a0
-    adda.l  #((160*28)+(16/2)),a0
+    adda.l  #((160*(155+28))+(32/2)),a0
     jsr     numl_on
 
     move.l  a1, a0
-    adda.l  #((160*31)+(16/2)),a0
+    adda.l  #((160*(155+31))+(32/2)),a0
     jsr     numm_on
 
     move.l  a1, a0
-    adda.l  #((160*34)+(16/2)),a0
+    adda.l  #((160*(155+34))+(32/2)),a0
     jsr     numr_on
 
     move.l  a1, a0
-    adda.l  #((160*7)+(16/2)),a0
+    adda.l  #((160*(155+7))+(32/2)),a0
     jsr     buta_on
 
     move.l  a1, a0
-    adda.l  #((160*10)+(16/2)),a0
+    adda.l  #((160*(155+10))+(32/2)),a0
     jsr     butb_on
 
     move.l  a1, a0
-    adda.l  #((160*13)+(16/2)),a0
+    adda.l  #((160*(155+13))+(32/2)),a0
     jsr     butc_on
 
-    move.w  #$000,$ff8240
+    move.w  palette,$ff8240
 
     jsr     get_key_press
     tst.b   d0
     beq.w   .loop
 
+    move.w  #$FFFE,$FF9202
+    moveq.l #0,d6
+    move.w  $FF9202,d6    
+    not.w   d6
+    move.l  d6,pad_mask_FFFE
+
+    jsr     restore_context
+
+    lea     hex_string,a0
+    move.l  d6,d0
+    ; move.l  #$DEADCAFE,d0
+    moveq.l #(8-1),d1 
+    jsr     core_to_hex_string
+    lea     hex_string,a3
+    jsr     print_message
+
+    jsr     wait_key_press
+
     ; move.w  pad1,d0
     ; illegal
 
-    jsr     restore_context
+    
     jsr     exit_application
 
 
@@ -154,6 +172,32 @@ print_message:
 .done:	
     move.l (sp)+,d0
     rts
+
+; a0: destination string
+; d0: input number
+; d1: number of character
+core_to_hex_string:
+	movem.l	d0-d3, -(sp)
+
+	add.l	d1, a0				; go to last char position
+
+.next_nibble:
+	move.l	#'0', d3			; prepare result, this is '0'
+	move.l	d0, d2				; get 2 chars
+	and.l	#$F, d2				; keep one nibble
+	cmp.b	#9, d2				; more than 9
+	ble.s	.number
+	move.l	#'7', d3			; prepare result, this is '7'
+.number:
+	add.l	d2, d3
+	move.b	d3, (a0)
+	subq.l	#1, a0	
+	lsr.l	#4, d0
+	subq.b	#1, d1
+	bpl.s	.next_nibble
+
+	movem.l	(sp)+, d0-d3
+	rts    
 
 ; ***************************
 ; keyboard functions
@@ -258,16 +302,22 @@ msg_test1:
 msg_test2:
     .dc.b	"Test 2",13,10,0
 
+hex_string:
+    .dc.b	"00000000",13,10,0    
+
     .bss
     .long
 physbase:       .ds.l    1
 
-pad1:           .ds.l    1
+pad_mask_FFFE:          .ds.l    1
 
 previous_screen:        .ds.l    1
 previous_stack:         .ds.l    1
 previous_resolution:    .ds.w    1
 previous_palette:       .ds.l    8
+
+; 033f0f3f
+
 
     .end
 ; EOF

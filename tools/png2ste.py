@@ -39,8 +39,6 @@ def main(argv):
     ims = Image.open( ref_image )
     full_width, full_height = ims.size
 
-    width = 48
-    height = 40
     width = full_width
     height = full_height
 
@@ -63,12 +61,15 @@ def main(argv):
 
             bp16 = [0,0,0,0]
 
-            for bit_num in range(0,16):
-                r,g,b,_ = ims.getpixel((x+bit_num,y))
-                c = get_ste_pal(r,g,b)
-                color_index = palette.index(c)
-                
-                bp16 = set_bitplans(bp16, color_index, bit_num)                
+            if x >=288 and y >= 166:
+                pass
+            else:
+                for bit_num in range(0,16):
+                    r,g,b,_ = ims.getpixel((x+bit_num,y))
+                    c = get_ste_pal(r,g,b)
+                    color_index = palette.index(c)
+                    
+                    bp16 = set_bitplans(bp16, color_index, bit_num)                
 
             pixmap[offset_r+0] = (bp16[0]>>8) & 0xFF
             pixmap[offset_r+1] = (bp16[0]>>0) & 0xFF
@@ -80,18 +81,18 @@ def main(argv):
             pixmap[offset_r+7] = (bp16[3]>>0) & 0xFF
 
     mask_list = [
-        ["up",      (0,7,16,2),[(0,46)]],
-        ["down",    (0,14,16,2),[(0,48)]],
-        ["right",   (0,10,16,3),[(0,43)]],
-        ["left",    (0,10,16,3),[(0,40)]],
-        ["pause",   (16,14,16,3),[(0,50)]],
-        ["option",  (16,14,16,3),[(0,53)]],
-        ["numl",    (16,28,16,1),[(0,71)]],
-        ["numm",    (16,28,16,1),[(0,72)]],
-        ["numr",    (16,28,16,1),[(0,73)]],
-        ["buta",    (16,7,32,5),[(0,56)]],
-        ["butb",    (16,10,32,5),[(0,61)]],
-        ["butc",    (16,13,32,5),[(0,66)]],
+        ["up",      (16+0,  155+7,16,2),        [(288,166+46-40)]],
+        ["down",    (16+0,  155+14,16,2),       [(288,166+48-40)]],
+        ["right",   (16+0,  155+10,16,3),       [(288,166+43-40)]],
+        ["left",    (16+0,  155+10,16,3),       [(288,166+40-40)]],
+        ["pause",   (16+16, 155+14,16,3),       [(288,166+50-40)]],
+        ["option",  (16+16, 155+14,16,3),       [(288,166+53-40)]],
+        ["numl",    (16+16, 155+28,16,1),       [(288,166+71-40)]],
+        ["numm",    (16+16, 155+28,16,1),       [(288,166+72-40)]],
+        ["numr",    (16+16, 155+28,16,1),       [(288,166+73-40)]],
+        ["buta",    (16+16, 155+7,32,5),        [(288,166+56-40)]],
+        ["butb",    (16+16, 155+10,32,5),       [(288,166+61-40)]],
+        ["butc",    (16+16, 155+13,32,5),       [(288,166+66-40)]],
     ]
 
     for name, comp_source, comp_list in mask_list:
@@ -105,10 +106,12 @@ def main(argv):
         img_comp_source = ims.crop((x,y,x+w,y+h))        
         
         for acomp in comp_list:
-            x,y = acomp
-            img_comp_test = ims.crop((x,y,x+w,y+h))
+            xcomp,ycomp = acomp
+            img_comp_test = ims.crop((xcomp,ycomp,xcomp+w,ycomp+h))
 
-            diff = ImageChops.difference(img_comp_source, img_comp_test)            
+            diff = ImageChops.difference(img_comp_source, img_comp_test)  
+            # print(xcomp,ycomp)
+            # diff.show()          
                         
             # create masks
             mask_off = f"{name}_off:\n"
