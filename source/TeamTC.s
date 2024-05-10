@@ -6,68 +6,135 @@
 
     jsr     save_context
 
-    move.w  #2, -(a7)                ; get physbase
-    trap    #14                      ; call XBIOS
-    addq.l  #2, a7                   ; clean up stack
-    move.l  d0, physbase             ; save it
+    move.w  #2, -(a7)               ; get physbase
+    trap    #14                     ; call XBIOS
+    addq.l  #2, a7                  ; clean up stack
+    move.l  d0, physbase            ; save it
 
-    move.w  #$700, $ffff8240       ; red background color
-
-    move.l  physbase, a0                   ; a0 points to screen
+    move.l  physbase, a0            ; a0 points to screen
 
     ; clears the screen to colour 0, background
-    move.l  #(8000-1), d1            ; size of screen memory
+    move.l  #(8000-1), d1           ; size of screen memory
 .clrscr:
-    clr.l  (a0)+                     ; all 0 means colour 0 :)
+    clr.l  (a0)+                    ; all 0 means colour 0 :)
     dbf    d1, .clrscr      
         
     ; load palette
-    movem.l palette, d0-d7         ; put picture palette in d0-d7
-    movem.l d0-d7, $ff8240           ; move palette from d0-d7
+    movem.l palette, d0-d7          ; put picture palette in d0-d7
+    movem.l d0-d7, $ff8240          ; move palette from d0-d7
 
     ; load bitmap
-    move.l  physbase, a0             ; a0 points to screen    
-    move.l  #bitmap, a1          ; a1 points to picture
-    move.l  #(8000-1), d0            ; 8000 longwords to a screen
+    move.l  physbase, a0            ; a0 points to screen    
+    move.l  #bitmap, a1             ; a1 points to picture
+    move.l  #(8000-1), d0           ; 8000 longwords to a screen
 .ldscr:
-    move.l  (a1)+, (a0)+             ; move one longword to screen
+    move.l  (a1)+, (a0)+            ; move one longword to screen
     dbf     d0, .ldscr
 
-    bra.s   .bypass
-
-    lea     msg_startup,a3
-    jsr     print_message
-
-    clr.l   pad1
-
 .loop:    
-    move.w  #$FFFE,$FF9202
-    move.w  $FF9200,d0
-    and.w   #$F,d0
-    not.w   d0
+    jsr     wait_vbl
+    move.w  #$FFF,$ff8240
 
-    lea     msg_test1,a3
-    btst    #1,d0
-    beq.s   .plop
-    lea     msg_test2,a3    
-.plop:
-    jsr     print_message
+    move.l  physbase, a1            ; a0 points to screen  
+
+    move.w  #$FFFE,$FF9202
+    move.w  $FF9202,d6    
+    not.w   d6
+
+    ; up test
+    move.l  a1, a0
+    adda.l  #160*7,a0
+
+    btst    #8,d6
+    beq.s   .up
+    jsr     up_on
+    bra.s   .endup
+.up:
+    jsr     up_off
+.endup:
+
+    ; down test
+    move.l  a1, a0
+    adda.l  #160*14,a0
+
+    btst    #9,d6
+    beq.s   .down
+    jsr     down_on
+    bra.s   .enddown
+.down:
+    jsr     down_off
+.enddown:
+
+    ; left test
+    move.l  a1, a0
+    adda.l  #160*10,a0
+
+    btst    #10,d6
+    beq.s   .left
+    jsr     left_on
+    bra.s   .endleft
+.left:
+    jsr     left_off
+.endleft:
+
+    ; right test
+    move.l  a1, a0
+    adda.l  #160*10,a0
+
+    btst    #11,d6
+    beq.s   .right
+    jsr     right_on
+    bra.s   .endright
+.right:
+    jsr     right_off
+.endright:
+
+    move.l  a1, a0
+    adda.l  #((160*14)+(16/2)),a0
+    jsr     pause_on
+
+    move.l  a1, a0
+    adda.l  #((160*14)+(16/2)),a0
+    jsr     option_on
+
+    move.l  a1, a0
+    adda.l  #((160*28)+(16/2)),a0
+    jsr     numl_on
+
+    move.l  a1, a0
+    adda.l  #((160*31)+(16/2)),a0
+    jsr     numm_on
+
+    move.l  a1, a0
+    adda.l  #((160*34)+(16/2)),a0
+    jsr     numr_on
+
+    move.l  a1, a0
+    adda.l  #((160*7)+(16/2)),a0
+    jsr     buta_on
+
+    move.l  a1, a0
+    adda.l  #((160*10)+(16/2)),a0
+    jsr     butb_on
+
+    move.l  a1, a0
+    adda.l  #((160*13)+(16/2)),a0
+    jsr     butc_on
+
+    move.w  #$000,$ff8240
 
     jsr     get_key_press
     tst.b   d0
-    beq.s   .loop
+    beq.w   .loop
 
-.bypass:
-    jsr     wait_key_press
-   
-
-    move.w  #$777, $ffff8240       ; white background color
     ; move.w  pad1,d0
     ; illegal
 
     jsr     restore_context
     jsr     exit_application
 
+
+    .include "pixmap_mask.s"
 
 ; ***************************
 ; text functions
