@@ -15,10 +15,7 @@
     move.l  physbase, a0            ; a0 points to screen
 
     ; clears the screen to colour 0, background
-    move.l  #(8000-1), d1           ; size of screen memory
-.clrscr:
-    clr.l  (a0)+                    ; all 0 means colour 0 :)
-    dbf    d1, .clrscr      
+    jsr     clear_screen 
         
     ; load palette
     movem.l palette, d0-d7          ; put picture palette in d0-d7
@@ -330,6 +327,19 @@ wait_key_press:
 ; ***************************
 ; system functions
 ; ***************************
+clear_screen:
+    movem.l d0/a0,-(sp)
+
+    ; clears the screen to colour 0, background
+    move.l  physbase, a0            ; a0 points to screen
+    move.l  #(8000-1), d0           ; size of screen memory
+.clrscr:
+    clr.l  (a0)+                    ; all 0 means colour 0 :)
+    dbf    d0, .clrscr 
+
+    movem.l (sp)+,d0/a0
+    rts
+
 wait_vbl:
     move.w  #37, -(a7)               ; wait VBL
     trap    #14

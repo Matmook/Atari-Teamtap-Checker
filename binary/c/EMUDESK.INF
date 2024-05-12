@@ -22,3 +22,4 @@
 #F 06 FF *.TOS@ @ 000 @
 #T 00 03 03 FF   TRASH@ @
 #O 03 03 04 FF   PRINTER@ @
+#M 03 00 00 FF D DISK D@ @
