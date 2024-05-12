@@ -5,6 +5,104 @@ TEAMTAP_WRITE_MASK_ADDR     .equ    $ffff9202
 TEAMTAP_READ_MASK_ADDR1     .equ    $ffff9200
 TEAMTAP_READ_MASK_ADDR2     .equ    $ffff9202
 
+; TeamTap A standalone detection
+; EQ if present
+TeamTapA_detect:
+    move.w  #$FFFA,TEAMTAP_WRITE_MASK_ADDR.w
+    move.w  TEAMTAP_READ_MASK_ADDR1.w,d0
+    btst    #0,d0
+    rts
+
+; TeamTap B standalone detection
+; EQ if present
+TeamTapB_detect:
+    move.w  #$FFAF,TEAMTAP_WRITE_MASK_ADDR.w
+    move.w  TEAMTAP_READ_MASK_ADDR1.w,d0
+    btst    #2,d0
+    rts    
+
+; TeamTap detection function
+; d0.b0 => TeamTap A
+; d0.b1 => TeamTap B
+TeamTap_detect:
+    move.l  d1,-(sp)
+
+	; clean result
+    moveq.l #0,d0
+
+    ; TeamTap A detection
+    move.w  #$FFFA,TEAMTAP_WRITE_MASK_ADDR.w
+    move.w  TEAMTAP_READ_MASK_ADDR1.w,d0
+	not.b	d0		; change it to positive logic
+    andi.b  #1,d0   ; bit 0 only!
+
+    ; TeamTap B detection
+    move.w  #$FFAF,TEAMTAP_WRITE_MASK_ADDR.w
+    move.w  TEAMTAP_READ_MASK_ADDR1.w,d1
+	not.b	d1		; change it to positive logic
+    ror.b   #1,d1   ; move bit 2 in position 1
+    andi.b  #2,d1   ; bit 1 only!
+    or.b    d1,d0   ; result
+
+    move.l  (sp)+,d1
+    rts
+
+; Read all pads entries (RAW)
+JapPadsRead:
+	movem.l	d0-d1/a0-a1,-(sp)
+
+	; A matrix
+	lea		TeamTapA_masks,a0
+	lea		JapPadsARawBuffer,a1
+	moveq.l	#(16-1),d1
+
+	move.b  TeamTapDetectionFlag,d0
+	btst    #TEAMTAP_A_DETECTED_BIT,d0
+    bne.s	.read_a
+	moveq.l	#(4-1),d1
+
+.read_a:
+	; write mask
+	move.w  #$FFFF,d0
+	move.b	(a0)+,d0
+	move.w  d0,TEAMTAP_WRITE_MASK_ADDR.w
+
+	; read Pause, Fire 0 or Fire 1 or Fire 2
+	move.w  TEAMTAP_READ_MASK_ADDR1.w,(a1)+
+
+	; read U,D,L,R or *741 or 0852 or #963
+	move.w  TEAMTAP_READ_MASK_ADDR2.w,(a1)+
+
+	dbra	d1,.read_a
+
+	; B matrix
+	lea		TeamTapB_masks,a0
+	lea		JapPadsBRawBuffer,a1
+	moveq.l	#(16-1),d1
+
+	move.b  TeamTapDetectionFlag,d0
+	btst    #TEAMTAP_B_DETECTED_BIT,d0
+    bne.s	.read_b
+	moveq.l	#(4-1),d1
+
+.read_b:
+	; write mask
+	move.w  #$FFFF,d0
+	move.b	(a0)+,d0
+	move.w  d0,TEAMTAP_WRITE_MASK_ADDR.w
+
+	; read Pause, Fire 0 or Fire 1 or Fire 2
+	move.w  TEAMTAP_READ_MASK_ADDR1.w,(a1)+
+
+	; read U,D,L,R or *741 or 0852 or #963
+	move.w  TEAMTAP_READ_MASK_ADDR2.w,(a1)+
+
+	dbra	d1,.read_b
+
+	movem.l	(sp)+,d0-d1/a0-a1
+    rts
+
+	.data
 ; mask 1, 2, 3 and 4
 TeamTapA_masks:	
 	dc.b	$fe,$fd,$fb,$f7 ; port A pad 1, also default pad 1
@@ -18,25 +116,18 @@ TeamTapB_masks:
 	dc.b	$0f,$1f,$2f,$3f ; port B pad 2
 	dc.b	$4f,$5f,$6f,$8f ; port B pad 3
 	dc.b	$9f,$af,$cf,$ff ; port B pad 4
-; detected if bit 2 or group 2 pad 4 is cleared    
+; detected if bit 2 or group 2 pad 4 is cleared    	
 
-TeamTapA_detect:
-    move.w  #$FFFA,TEAMTAP_WRITE_MASK_ADDR.w
-    move.w  TEAMTAP_READ_MASK_ADDR1.w,d0
-    btst    #0,d0
-    rts
+	.bss
+TEAMTAP_A_DETECTED_BIT  .equ    0
+TEAMTAP_B_DETECTED_BIT  .equ    1
+TeamTapDetectionFlag:   .ds.b   1
 
-TeamTapB_detect:
-    move.w  #$FFAF,TEAMTAP_WRITE_MASK_ADDR.w
-    move.w  TEAMTAP_READ_MASK_ADDR1.w,d0
-    btst    #2,d0
-    rts    
-
-JapPadRead:
-
-
-
-    rts
+; including unused bits
+JapPadsARawBuffer:		.ds.w	(8*4)
+JapPadsBRawBuffer:		.ds.w	(8*4)
+	
+	.text
 
 *------------------------------------------------------------------------------------*
 * FUNCTION : void IKBD_PowerpadHandler()

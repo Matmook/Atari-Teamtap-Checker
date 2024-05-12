@@ -6,99 +6,7 @@
 
     jsr     save_context
 
-    ; #############################
-    ; show debug
-.dump_again:
-
-    ; TeamTap A detection
-    move.w  #$FFFA,$ffff9202.w
-    move.w  $ffff9200.w,d0
-    btst    #0,d0
-    bne.s   .not_team_tap_A
-
-    lea     TeamTapA_string,a3
-    bsr     print_message    
-
-.not_team_tap_A:
-
-    ; TeamTap B detection
-    move.w  #$FFAF,$ffff9202.w
-    move.w  $ffff9200.w,d0
-    btst    #2,d0
-    bne.s   .not_team_tap_B
-
-    lea     TeamTapB_string,a3
-    bsr     print_message    
-
-.not_team_tap_B:
-
-    moveq	#4-1,d0
-	lea		gKbdJagPadMasksA,a5
-
-    .rept 4
-    .rept 4
-    ; write mask
-    move.w  #$FFFF,d0
-    move.b	(a5)+,d0
-    move.w  d0,$ffff9202.w
-
-    ; read Pause, Fire 0 or Fire 1 or Fire 2
-    move.w  $ffff9200.w,d0
-    moveq.l #(4-1),d1
-    lea     hex_string,a0
-    jsr     core_to_hex_string
-	lea     hex_string,a3
-    bsr     print_message
-    lea     space_string,a3
-    bsr     print_message
-    
-    ; read U,D,L,R or *741 or 0852 or #963
-    move.w  $ffff9202.w,d0
-    moveq.l #(4-1),d1
-    lea     hex_string,a0
-    jsr     core_to_hex_string
-	lea     hex_string,a3
-    bsr     print_message
-    lea     space_string,a3
-    bsr     print_message
-
-    .endr
-    lea     msg_crlf,a3
-    bsr     print_message
-	
-    .endr
-
-    lea     msg_crlf,a3
-    bsr     print_message
-
-    bra.s   .wait_dump_key
-
-    jsr     IKBD_PowerpadHandler
-
-    lea     msg_table,a5
-.loop_dump:
-    move.l  (a5)+,a0
-    cmpa.l  #0,a0
-    beq.s   .wait_dump_key
-    jsr     show_debug
-    bra.s   .loop_dump
-    
-.wait_dump_key:
-    jsr     wait_vbl
-    jsr     get_key_press
-    
-    cmp.b   #' ',d0
-    beq     .dump_again
-    
-    cmp.b   #'q',d0
-    beq     .exit
-
-    cmp.b   #'s',d0
-    beq.s   .start_normal
-
-    bra.s   .wait_dump_key
-    ; #############################
-.start_normal:
+    ; get screen buffer address
     move.w  #2, -(a7)               ; get physbase
     trap    #14                     ; call XBIOS
     addq.l  #2, a7                  ; clean up stack
@@ -124,9 +32,24 @@
     move.l  (a1)+, (a0)+            ; move one longword to screen
     dbf     d0, .ldscr
 
+    jsr     TeamTap_detect          ; do a first detection
+    move.b  d0,TeamTapDetectionFlag ; save initial state
+
+.teamtap_state_changed:
+    jsr     wait_vbl
+    jsr     update_teamtaps
+
 .loop:    
     jsr     wait_vbl
     ; move.w  #$FFF,$ff8240
+
+    ; check if a teamtap has been added or removed
+    ; and update bitmap accordingly
+    move.b  TeamTapDetectionFlag,d1 ; get previous value
+    jsr     TeamTap_detect          ; detect state again
+    move.b  d0,TeamTapDetectionFlag ; save new state
+    cmp.b   d0,d1
+    bne.s   .teamtap_state_changed
 
     move.l  physbase, a1            ; a0 points to screen  
 
@@ -220,10 +143,79 @@
     tst.b   d0
     beq.w   .loop
 
+    ; a key has been pressed!
+    cmp.b   #'d',d0
+    bne.s   .exit
+    jsr     enter_debug_mode
 .exit:
     jsr     restore_context  
     jsr     exit_application
 
+; update TeamTaps picture
+update_teamtaps:
+    movem.l d0-d5/a0-a3,-(sp)
+    move.l  physbase, a1            ; a0 points to screen 
+
+    ; TeamTap A
+    lea     notap_on,a2
+    lea     notpad_on,a3
+    move.b  TeamTapDetectionFlag,d5
+    btst    #TEAMTAP_A_DETECTED_BIT,d5
+    beq.s   .update_team_tap_A
+
+    ; there is a teamtap
+    lea     notap_off,a2
+    lea     notpad_off,a3
+.update_team_tap_A:
+    move.l  a1, a0
+    adda.l  #((160*75)+(96/2)),a0
+    jsr     (a2)
+
+    move.l  a1, a0
+    adda.l  #((160*120)+(64/2)),a0
+    jsr     (a3)
+
+    move.l  a1, a0
+    adda.l  #((160*120)+(128/2)),a0
+    jsr     (a3)
+
+    move.l  a1, a0
+    adda.l  #((160*166)+(96/2)),a0
+    jsr     (a3)
+
+    ; TeamTap B
+    lea     notap_on,a2
+    lea     notpad_on,a3
+    btst    #TEAMTAP_B_DETECTED_BIT,d5
+    beq.s   .update_team_tap_B
+
+    ; there is a teamtap
+    lea     notap_off,a2
+    lea     notpad_off,a3
+.update_team_tap_B:
+    move.l  a1, a0
+    adda.l  #((160*75)+((96+128)/2)),a0
+    jsr     (a2)
+   
+    move.l  a1, a0
+    adda.l  #((160*120)+((64+128)/2)),a0
+    jsr     (a3)
+
+    move.l  a1, a0
+    adda.l  #((160*120)+((128+128)/2)),a0
+    jsr     (a3)
+
+    move.l  a1, a0
+    adda.l  #((160*166)+((96+128)/2)),a0
+    jsr     (a3)
+
+    movem.l (sp)+,d0-d5/a0-a3
+    rts
+
+; ***************************
+; external functions
+; ***************************
+    .include "debug.s"
     .include "pads.s"
     .include "pixmap_mask.s"
 
@@ -267,7 +259,7 @@ show_debug:
     lea     hex_string,a3
     bsr.s   print_message
 
-    lea     msg_crlf,a3
+    lea     string_crlf,a3
     bsr.s   print_message
 
     move.l  (sp)+,a0
@@ -405,115 +397,20 @@ exit_application:
 	trap	#1			            ; GEMDOS call
 
     .data
-    .long
-
-    .include "pixmap.s"
-
-    .long
-msg_TeamTapActiveFlag:
-    .dc.l   TeamTapActiveFlag
-    .dc.b   2,"TeamTapActiveFlag:",0
-
-    .long
-msg_TeamTapActiveBits:
-    .dc.l   TeamTapActiveBits
-    .dc.b   2,"TeamTapActiveBits:",0
-
-    .long
-msg_Pad0Dir:
-    .dc.l   Pad0Dir
-    .dc.b   2,"Pad0Dir:",0
-
-    .long
-msg_Pad1Dir:
-    .dc.l   Pad1Dir
-    .dc.b   2,"Pad1Dir:",0
-
-    .long
-msg_Pad0Key:
-    .dc.l   Pad0Key
-    .dc.b   4,"Pad0Key:",0
-
-    .long
-msg_Pad1Key:
-    .dc.l   Pad1Key
-    .dc.b   4,"Pad1Key:",0
-
-    .long
-msg_TeamTapDirs_p1:
-    .dc.l   TeamTapDirs
-    .dc.b   8,"TeamTapDirs:",0
-
-    .long
-msg_TeamTapDirs_p2:
-    .dc.l   TeamTapDirs+4
-    .dc.b   8,"TeamTapDirs:",0    
-
-    .long
-msg_TeamTapKeys_p1:
-    .dc.l   TeamTapKeys
-    .dc.b   8,"TeamTapKeys:",0  
-
-    .long
-msg_TeamTapKeys_p2:
-    .dc.l   TeamTapKeys+4
-    .dc.b   8,"TeamTapKeys:",0  
-
-    .long
-msg_TeamTapKeys_p3:
-    .dc.l   TeamTapKeys+8
-    .dc.b   8,"TeamTapKeys:",0  
-
-    .long
-msg_TeamTapKeys_p4:
-    .dc.l   TeamTapKeys+12
-    .dc.b   8,"TeamTapKeys:",0          
-
-    .long
-msg_table:
-    .dc.l   msg_TeamTapActiveFlag
-    .dc.l   msg_TeamTapActiveBits
-    .dc.l   msg_Pad0Dir
-    .dc.l   msg_Pad1Dir
-    .dc.l   msg_Pad0Key
-    .dc.l   msg_Pad1Key
-    .dc.l   msg_TeamTapDirs_p1
-    .dc.l   msg_TeamTapDirs_p2
-    .dc.l   msg_TeamTapKeys_p1
-    .dc.l   msg_TeamTapKeys_p2
-    .dc.l   msg_TeamTapKeys_p3
-    .dc.l   msg_TeamTapKeys_p4
-    .dc.l   0
-
-    .long
-msg_crlf:
-    .dc.b	13,10,0
-
-    .long
-space_string:    
-    .dc.b	' ',0
-
-    .long
-TeamTapA_string:
-    .dc.b   "TeamTap A!",13,10,0  
-
-    .long
-TeamTapB_string:
-    .dc.b   "TeamTap B!",13,10,0      
+    .include "pixmap.s"             ; we need some bitmaps!
 
     .bss
     .long
-physbase:       .ds.l    1
-
+physbase:               .ds.l    1
+    .long
 hex_string:             .ds.b    8
 
+; context backup
+    .long
 previous_screen:        .ds.l    1
 previous_stack:         .ds.l    1
-previous_resolution:    .ds.w    1
 previous_palette:       .ds.l    8
-
-; 033f0f3f
-
+previous_resolution:    .ds.w    1
 
     .end
 ; EOF
