@@ -29,16 +29,18 @@
     move.l  (a1)+, (a0)+            ; move one longword to screen
     dbf     d0, .ldscr
 
+    move.b  #$FF,TeamTapDetectionFlag ; initial fake state (force upgrade)
     jsr     TeamTap_detect          ; do a first detection
     move.b  d0,TeamTapDetectionFlag ; save initial state
 
 .teamtap_state_changed:
+    move.w  #$FFF,$ff8240           ; make it blink!
     jsr     wait_vbl
     jsr     update_teamtaps
 
 .loop:    
     jsr     wait_vbl
-    ; move.w  #$FFF,$ff8240
+    
 
     ; check if a teamtap has been added or removed
     ; and update bitmap accordingly
@@ -48,93 +50,136 @@
     cmp.b   d0,d1
     bne.s   .teamtap_state_changed
 
-    move.l  physbase, a1            ; a0 points to screen  
+    ; read all pads entries (including edges)
+    jsr     JapPadsRead
 
-    move.w  #$FFFE,$FF9202
-    move.w  $FF9202,d6    
-    not.w   d6
+    ; update pads
+    moveq.l #(8-1),d5               ; 8 pads max!
+    lea     JapPadsAState,a1
+    lea     pad_position_table,a3
+.loop_pad_update:
+    move.l  (a1)+,d6                ; current pad state
+    move.l  (a1)+,d7                ; pad changed bits
+    beq.w   .next                   ; no pad change!
 
-    ; up test
-    move.l  a1, a0
-    adda.l  #160*(155+7)+(16/2),a0
+    ; something has changed, update pad bitmaps
 
-    btst    #8,d6
-    beq.s   .up
-    jsr     up_on
-    bra.s   .endup
-.up:
-    jsr     up_off
-.endup:
+    ; ## DIRECTION ##
+    move.l  d7,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_RLDU,d0    ; get pad bits
+    beq.s   .no_RLDU_change
 
-    ; down test
-    move.l  a1, a0
-    adda.l  #160*(155+14)+(16/2),a0
+    move.l  d6,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_RLDU,d0    ; get pad bits
 
-    btst    #9,d6
-    beq.s   .down
-    jsr     down_on
-    bra.s   .enddown
-.down:
-    jsr     down_off
-.enddown:
+    lea     pad_update_table,a2
+.search_pad_update:
+    move.l  (a2)+,d1
+    bmi.s   .no_RLDU_change          ; end of table, unknow value!
 
-    ; left test
-    move.l  a1, a0
-    adda.l  #160*(155+10)+(16/2),a0
+    move.l  (a2)+,d2                ; read value
+    cmp.l   d0,d1                   ; match?
+    bne.s   .search_pad_update      ; nope
 
-    btst    #10,d6
-    beq.s   .left
-    jsr     left_on
-    bra.s   .endleft
-.left:
-    jsr     left_off
-.endleft:
+    ; update pad
+    move.l  physbase, a0            ; a0 points to screen  
+    move.l  (a3),d1
+    add.l   #(160*8),d1
+    adda.l  d1,a0
+    movea.l d2,a4                   ; get the mask/copy function address
+    jsr     (a4)                    ; and run it!
+.no_RLDU_change:
 
-    ; right test
-    move.l  a1, a0
-    adda.l  #160*(155+10)+(16/2),a0
+    ; ## OPTION and PAUSE ##
+    move.l  d7,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_PO,d0      ; get pad bits
+    beq.s   .no_PO_change
 
-    btst    #11,d6
-    beq.s   .right
-    jsr     right_on
-    bra.s   .endright
-.right:
-    jsr     right_off
-.endright:
+    move.l  d6,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_PO,d0      ; get pad bits
 
-    move.l  a1, a0
-    adda.l  #((160*(155+14))+(32/2)),a0
-    jsr     pause_on
+    lea     po_update_table,a2
+.search_po_update:
+    move.l  (a2)+,d1
+    bmi.s   .no_PO_change           ; end of table, unknow value!
 
-    move.l  a1, a0
-    adda.l  #((160*(155+14))+(32/2)),a0
-    jsr     option_on
+    move.l  (a2)+,d2                ; read value
+    cmp.l   d0,d1                   ; match?
+    bne.s   .search_po_update       ; nope
 
-    move.l  a1, a0
-    adda.l  #((160*(155+28))+(32/2)),a0
-    jsr     numl_on
+    ; update pad
+    move.l  physbase, a0            ; a0 points to screen  
+    move.l  (a3),d1
+    add.l   #(160*14)+(16/2),d1
+    adda.l  d1,a0
+    movea.l d2,a4                   ; get the mask/copy function address
+    jsr     (a4)                    ; and run it!
+.no_PO_change:
 
-    move.l  a1, a0
-    adda.l  #((160*(155+31))+(32/2)),a0
-    jsr     numm_on
+    ; ## ABC ##
+    move.l  d7,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_ABC,d0     ; get pad bits
+    beq.s   .no_ABC_change
 
-    move.l  a1, a0
-    adda.l  #((160*(155+34))+(32/2)),a0
-    jsr     numr_on
+    move.l  d6,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_ABC,d0     ; get pad bits
 
-    move.l  a1, a0
-    adda.l  #((160*(155+7))+(32/2)),a0
-    jsr     buta_on
+    lea     abc_update_table,a2
+.search_abc_update:
+    move.l  (a2)+,d1
+    bmi.s   .no_ABC_change          ; end of table, unknow value!
 
-    move.l  a1, a0
-    adda.l  #((160*(155+10))+(32/2)),a0
-    jsr     butb_on
+    move.l  (a2)+,d2                ; read value
+    cmp.l   d0,d1                   ; match?
+    bne.s   .search_abc_update      ; nope
 
-    move.l  a1, a0
-    adda.l  #((160*(155+13))+(32/2)),a0
-    jsr     butc_on
+    ; update abc
+    move.l  physbase, a0            ; a0 points to screen  
+    move.l  (a3),d1
+    add.l   #(160*8)+(16/2),d1
+    adda.l  d1,a0
+    movea.l d2,a4                   ; get the mask/copy function address
+    jsr     (a4)                    ; and run it!
+.no_ABC_change:
 
-    ; move.w  palette,$ff8240
+    ; ## NUMPAD LINE 1 ##
+    move.l  d7,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_123,d0     ; get pad bits
+    beq.s   .no_123_change
+
+    move.l  d6,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_123,d0     ; get pad bits
+
+    lea     num_update_table,a2
+.search_num123_update:
+    move.l  (a2)+,d1
+    bmi.s   .no_123_change          ; end of table, unknow value!
+
+    move.l  (a2)+,d2                ; read value
+    cmp.l   d0,d1                   ; match?
+    bne.s   .search_num123_update   ; nope
+
+    ; update abc
+    move.l  physbase, a0            ; a0 points to screen  
+    move.l  (a3),d1
+    add.l   #(160*28)+(16/2),d1
+    adda.l  d1,a0
+    movea.l d2,a4                   ; get the mask/copy function address
+    jsr     (a4)                    ; and run it!
+.no_123_change:
+
+
+
+.next:
+    lea     4(a3),a3
+    dbra    d5,.loop_pad_update
+
+    ; adda.l  #((160*(155+28))+(32/2)),a0 ; num left
+    ; adda.l  #((160*(155+31))+(32/2)),a0 ; num center
+    ; adda.l  #((160*(155+34))+(32/2)),a0 ; num right
+
+
+    move.w  palette,$ff8240         ; back to default background color!
 
     jsr     get_key_press
     tst.b   d0
@@ -147,6 +192,66 @@
 .exit:
     jsr     restore_context  
     jsr     exit_application
+    ; GO BACK TO THE SYSTEM!
+
+
+    ; 9 positions
+pad_update_table:
+    dc.l    $00000000,d0_copy
+    dc.l    $00040000,d1_copy
+    dc.l    $00240000,d2_copy
+    dc.l    $00200000,d3_copy
+    dc.l    $00280000,d4_copy
+    dc.l    $00080000,d5_copy
+    dc.l    $00180000,d6_copy
+    dc.l    $00100000,d7_copy
+    dc.l    $00140000,d8_copy
+    dc.l    $FFFFFFFF
+
+    ; 8 positions
+abc_update_table:
+    dc.l    $00000000,abc0_update
+    dc.l    $00800000,abc1_update
+    dc.l    $00020000,abc2_update
+    dc.l    $00820000,abc3_update
+    dc.l    $00000800,abc4_update
+    dc.l    $00800800,abc5_update
+    dc.l    $00020800,abc6_update
+    dc.l    $00820800,abc7_update
+    dc.l    $FFFFFFFF    
+
+    ; 8 positions
+num_update_table:
+    dc.l    $00000000,n0_copy
+    dc.l    $00800000,n1_copy
+    dc.l    $00020000,n2_copy
+    dc.l    $00820000,n3_copy
+    dc.l    $00000800,n4_copy
+    dc.l    $00800800,n5_copy
+    dc.l    $00020800,n6_copy
+    dc.l    $00820800,n7_copy
+    dc.l    $FFFFFFFF    
+
+    ; 4 positions
+po_update_table:
+    dc.l    $00000000,po0_update
+    dc.l    $00000020,po1_update
+    dc.l    $00400000,po2_update
+    dc.l    $00400020,po3_update
+    dc.l    $FFFFFFFF
+
+    ; 8 pads
+pad_position_table:
+    dc.l    (16/2)+(160*155)
+    dc.l    (48/2)+(160*109)
+    dc.l    (80/2)+(160*155)
+    dc.l    (112/2)+(160*109)
+    dc.l    (144/2)+(160*155)
+    dc.l    (176/2)+(160*109)
+    dc.l    (208/2)+(160*155)
+    dc.l    (240/2)+(160*109)
+
+
 
 ; update TeamTaps picture
 update_teamtaps:
@@ -154,15 +259,15 @@ update_teamtaps:
     move.l  physbase, a1            ; a0 points to screen 
 
     ; TeamTap A
-    lea     notap_on,a2
-    lea     notpad_on,a3
+    lea     notap_update,a2
+    lea     notpad_update,a3
     move.b  TeamTapDetectionFlag,d5
     btst    #TEAMTAP_A_DETECTED_BIT,d5
     beq.s   .update_team_tap_A
 
     ; there is a teamtap
-    lea     notap_off,a2
-    lea     notpad_off,a3
+    lea     notap_delete,a2
+    lea     notpad_delete,a3
 .update_team_tap_A:
     move.l  a1, a0
     adda.l  #((160*75)+(96/2)),a0
@@ -181,14 +286,14 @@ update_teamtaps:
     jsr     (a3)
 
     ; TeamTap B
-    lea     notap_on,a2
-    lea     notpad_on,a3
+    lea     notap_update,a2
+    lea     notpad_update,a3
     btst    #TEAMTAP_B_DETECTED_BIT,d5
     beq.s   .update_team_tap_B
 
     ; there is a teamtap
-    lea     notap_off,a2
-    lea     notpad_off,a3
+    lea     notap_delete,a2
+    lea     notpad_delete,a3
 .update_team_tap_B:
     move.l  a1, a0
     adda.l  #((160*75)+((96+128)/2)),a0

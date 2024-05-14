@@ -1,1101 +1,1780 @@
-up_off:
-	movem.l (a0),d0-d1
-	andi.l	#$FFEFFFEF,d0
-	andi.l	#$FFEFFFEF,d1
-	ori.l	#$00100000,d0
-	ori.l	#$00000010,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FFC7FFC7,d0
-	andi.l	#$FFC7FFC7,d1
-	ori.l	#$00300000,d0
-	ori.l	#$00080030,d1
-	movem.l d0-d1,(a0)
+d0_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D8B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14300B01,(a0)+
+	move.l	#$0B0914F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A0035FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$24361B01,(a0)+
+	move.l	#$1B0964F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D8B4274,(a0)+
 	rts
 
-up_on:
-	movem.l (a0),d0-d1
-	andi.l	#$FFEFFFEF,d0
-	andi.l	#$FFEFFFEF,d1
-	ori.l	#$00100000,d0
-	ori.l	#$00100010,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FFC7FFC7,d0
-	andi.l	#$FFC7FFC7,d1
-	ori.l	#$00380000,d0
-	ori.l	#$00380038,d1
-	movem.l d0-d1,(a0)
+d1_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D9B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14380B01,(a0)+
+	move.l	#$0B3914FE,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A0035FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$24361B01,(a0)+
+	move.l	#$1B0964F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D8B4274,(a0)+
 	rts
 
-down_off:
-	movem.l (a0),d0-d1
-	andi.l	#$FFC7FFC7,d0
-	andi.l	#$FFC7FFC7,d1
-	ori.l	#$00300000,d0
-	ori.l	#$00080030,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FFEFFFEF,d0
-	andi.l	#$FFEFFFEF,d1
-	ori.l	#$00100000,d0
-	ori.l	#$00000010,d1
-	movem.l d0-d1,(a0)
+d2_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D9B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14380B01,(a0)+
+	move.l	#$0B3914FE,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A0435FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0625FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0425FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$24361B01,(a0)+
+	move.l	#$1B0964F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D8B4274,(a0)+
 	rts
 
-down_on:
-	movem.l (a0),d0-d1
-	andi.l	#$FFC7FFC7,d0
-	andi.l	#$FFC7FFC7,d1
-	ori.l	#$00380000,d0
-	ori.l	#$00380038,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FFEFFFEF,d0
-	andi.l	#$FFEFFFEF,d1
-	ori.l	#$00100000,d0
-	ori.l	#$00100010,d1
-	movem.l d0-d1,(a0)
+d3_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D8B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14300B01,(a0)+
+	move.l	#$0B0914F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A0435FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0625FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0425FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$24361B01,(a0)+
+	move.l	#$1B0964F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D8B4274,(a0)+
 	rts
 
-right_off:
-	movem.l (a0),d0-d1
-	andi.l	#$FFFDFFFD,d0
-	andi.l	#$FFFDFFFD,d1
-	ori.l	#$00020000,d0
-	ori.l	#$00000002,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FFFCFFFC,d0
-	andi.l	#$FFFCFFFC,d1
-	ori.l	#$00030000,d0
-	ori.l	#$00000003,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FFFDFFFD,d0
-	andi.l	#$FFFDFFFD,d1
-	ori.l	#$00020000,d0
-	ori.l	#$00000002,d1
-	movem.l d0-d1,(a0)
+d4_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D8B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14300B01,(a0)+
+	move.l	#$0B0914F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A0435FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0625FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0425FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$243E1B01,(a0)+
+	move.l	#$1B3964FE,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D9B4274,(a0)+
 	rts
 
-right_on:
-	movem.l (a0),d0-d1
-	andi.l	#$FFFDFFFD,d0
-	andi.l	#$FFFDFFFD,d1
-	ori.l	#$00020000,d0
-	ori.l	#$00020002,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FFFCFFFC,d0
-	andi.l	#$FFFCFFFC,d1
-	ori.l	#$00030000,d0
-	ori.l	#$00030003,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FFFDFFFD,d0
-	andi.l	#$FFFDFFFD,d1
-	ori.l	#$00020000,d0
-	ori.l	#$00020002,d1
-	movem.l d0-d1,(a0)
+d5_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D8B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14300B01,(a0)+
+	move.l	#$0B0914F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A0035FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A0025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$243E1B01,(a0)+
+	move.l	#$1B3964FE,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D9B4274,(a0)+
 	rts
 
-left_off:
-	movem.l (a0),d0-d1
-	andi.l	#$FF7FFF7F,d0
-	andi.l	#$FF7FFF7F,d1
-	ori.l	#$00800000,d0
-	ori.l	#$00000080,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FE7FFE7F,d0
-	andi.l	#$FE7FFE7F,d1
-	ori.l	#$01800000,d0
-	ori.l	#$00000180,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FF7FFF7F,d0
-	andi.l	#$FF7FFF7F,d1
-	ori.l	#$00800000,d0
-	ori.l	#$00000080,d1
-	movem.l d0-d1,(a0)
+d6_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D8B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14300B01,(a0)+
+	move.l	#$0B0914F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A4035FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1AC025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A4025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$243E1B01,(a0)+
+	move.l	#$1B3964FE,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D9B4274,(a0)+
 	rts
 
-left_on:
-	movem.l (a0),d0-d1
-	andi.l	#$FF7FFF7F,d0
-	andi.l	#$FF7FFF7F,d1
-	ori.l	#$00800000,d0
-	ori.l	#$00800080,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FE7FFE7F,d0
-	andi.l	#$FE7FFE7F,d1
-	ori.l	#$01800000,d0
-	ori.l	#$01800180,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FF7FFF7F,d0
-	andi.l	#$FF7FFF7F,d1
-	ori.l	#$00800000,d0
-	ori.l	#$00800080,d1
-	movem.l d0-d1,(a0)
+d7_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D8B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14300B01,(a0)+
+	move.l	#$0B0914F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A4035FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1AC025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A4025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$24361B01,(a0)+
+	move.l	#$1B0964F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D8B4274,(a0)+
 	rts
 
-pause_off:
-	movem.l (a0),d0-d1
-	andi.l	#$F3FFF3FF,d0
-	andi.l	#$F3FFF3FF,d1
-	ori.l	#$00000C00,d0
-	ori.l	#$00000C00,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$E7FFE7FF,d0
-	andi.l	#$E7FFE7FF,d1
-	ori.l	#$00001800,d0
-	ori.l	#$00001800,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$CFFFCFFF,d0
-	andi.l	#$CFFFCFFF,d1
-	ori.l	#$00001000,d0
-	ori.l	#$20001000,d1
-	movem.l d0-d1,(a0)
+d8_copy:
+	move.l	#$12340D83,(a0)+
+	move.l	#$0D9B1274,(a0)+
+	lea	152(a0),a0
+	move.l	#$14380B01,(a0)+
+	move.l	#$0B3914FE,(a0)+
+	lea	152(a0),a0
+	move.l	#$35FF0A00,(a0)+
+	move.l	#$0A4035FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1AC025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$25FF1A00,(a0)+
+	move.l	#$1A4025FF,(a0)+
+	lea	152(a0),a0
+	move.l	#$24361B01,(a0)+
+	move.l	#$1B0964F6,(a0)+
+	lea	152(a0),a0
+	move.l	#$42343D83,(a0)+
+	move.l	#$3D8B4274,(a0)+
 	rts
 
-pause_on:
-	movem.l (a0),d0-d1
-	andi.l	#$F3FFF3FF,d0
-	andi.l	#$F3FFF3FF,d1
-	ori.l	#$0C000000,d0
-	ori.l	#$0C000C00,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$E7FFE7FF,d0
-	andi.l	#$E7FFE7FF,d1
-	ori.l	#$18000000,d0
-	ori.l	#$18001800,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$CFFFCFFF,d0
-	andi.l	#$CFFFCFFF,d1
-	ori.l	#$30000000,d0
-	ori.l	#$30003000,d1
-	movem.l d0-d1,(a0)
-	rts
-
-option_off:
-	movem.l (a0),d0-d1
-	andi.l	#$FFCFFFCF,d0
-	andi.l	#$FFCFFFCF,d1
-	ori.l	#$00000030,d0
-	ori.l	#$00000030,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FF9FFF9F,d0
-	andi.l	#$FF9FFF9F,d1
-	ori.l	#$00000060,d0
-	ori.l	#$00000060,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FF3FFF3F,d0
-	andi.l	#$FF3FFF3F,d1
-	ori.l	#$00000040,d0
-	ori.l	#$00800040,d1
-	movem.l d0-d1,(a0)
-	rts
-
-option_on:
-	movem.l (a0),d0-d1
-	andi.l	#$FFCFFFCF,d0
-	andi.l	#$FFCFFFCF,d1
-	ori.l	#$00300000,d0
-	ori.l	#$00300030,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FF9FFF9F,d0
-	andi.l	#$FF9FFF9F,d1
-	ori.l	#$00600000,d0
-	ori.l	#$00600060,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$FF3FFF3F,d0
-	andi.l	#$FF3FFF3F,d1
-	ori.l	#$00C00000,d0
-	ori.l	#$00C000C0,d1
-	movem.l d0-d1,(a0)
-	rts
-
-numl_off:
-	movem.l (a0),d0-d1
-	andi.l	#$87FF87FF,d0
-	andi.l	#$87FF87FF,d1
-	ori.l	#$78007800,d0
-	ori.l	#$00000000,d1
-	movem.l d0-d1,(a0)
-	rts
-
-numl_on:
-	movem.l (a0),d0-d1
-	andi.l	#$87FF87FF,d0
-	andi.l	#$87FF87FF,d1
-	ori.l	#$78000000,d0
-	ori.l	#$78007800,d1
-	movem.l d0-d1,(a0)
-	rts
-
-numm_off:
-	movem.l (a0),d0-d1
-	andi.l	#$FC3FFC3F,d0
-	andi.l	#$FC3FFC3F,d1
-	ori.l	#$03C003C0,d0
-	ori.l	#$00000000,d1
-	movem.l d0-d1,(a0)
-	rts
-
-numm_on:
-	movem.l (a0),d0-d1
-	andi.l	#$FC3FFC3F,d0
-	andi.l	#$FC3FFC3F,d1
-	ori.l	#$03C00000,d0
-	ori.l	#$03C003C0,d1
-	movem.l d0-d1,(a0)
-	rts
-
-numr_off:
-	movem.l (a0),d0-d1
-	andi.l	#$FFE1FFE1,d0
-	andi.l	#$FFE1FFE1,d1
-	ori.l	#$001E001E,d0
-	ori.l	#$00000000,d1
-	movem.l d0-d1,(a0)
-	rts
-
-numr_on:
-	movem.l (a0),d0-d1
-	andi.l	#$FFE1FFE1,d0
-	andi.l	#$FFE1FFE1,d1
-	ori.l	#$001E0000,d0
-	ori.l	#$001E001E,d1
-	movem.l d0-d1,(a0)
-	rts
-
-buta_off:
+abc0_update:
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FFBFFFBF,d2
-	andi.l	#$FFBFFFBF,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
 	ori.l	#$00000000,d2
-	ori.l	#$00400040,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FF1FFF1F,d2
-	andi.l	#$FF1FFF1F,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
+	andi.l	#$FF9FFF9F,d2
+	andi.l	#$FF9FFF9F,d3
 	ori.l	#$00000060,d2
-	ori.l	#$00800080,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FE0FFE0F,d2
-	andi.l	#$FE0FFE0F,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
-	ori.l	#$001000F0,d2
-	ori.l	#$01000110,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
 	andi.l	#$FF1FFF1F,d2
 	andi.l	#$FF1FFF1F,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$002000E0,d2
-	ori.l	#$00000020,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	ori.l	#$000000E0,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FFBFFFBF,d2
-	andi.l	#$FFBFFFBF,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
-	ori.l	#$00400040,d2
-	ori.l	#$00000040,d3
-	movem.l d0-d3,(a0)
-	rts
-
-buta_on:
+	andi.l	#$FF3FFF3F,d2
+	andi.l	#$FF3FFF3F,d3
+	ori.l	#$000000C0,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FFBFFFBF,d2
-	andi.l	#$FFBFFFBF,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
-	ori.l	#$00400000,d2
-	ori.l	#$00400040,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FF1FFF1F,d2
-	andi.l	#$FF1FFF1F,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$00E00000,d2
-	ori.l	#$00E000E0,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FE0FFE0F,d2
-	andi.l	#$FE0FFE0F,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$01F00000,d2
-	ori.l	#$01F001F0,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FF1FFF1F,d2
-	andi.l	#$FF1FFF1F,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$00E00000,d2
-	ori.l	#$00E000E0,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FFBFFFBF,d2
-	andi.l	#$FFBFFFBF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$00400000,d2
-	ori.l	#$00400040,d3
-	movem.l d0-d3,(a0)
-	rts
-
-butb_off:
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FBFFFBFF,d2
-	andi.l	#$FBFFFBFF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$00000000,d2
-	ori.l	#$04000400,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$F1FFF1FF,d2
-	andi.l	#$F1FFF1FF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
+	andi.l	#$F9FFF9FF,d2
+	andi.l	#$F9FFF9FF,d3
 	ori.l	#$00000600,d2
-	ori.l	#$08000800,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$E0FFE0FF,d2
-	andi.l	#$E0FFE0FF,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
-	ori.l	#$01000F00,d2
-	ori.l	#$10001100,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
 	andi.l	#$F1FFF1FF,d2
 	andi.l	#$F1FFF1FF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$02000E00,d2
-	ori.l	#$00000200,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	ori.l	#$00000E00,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FBFFFBFF,d2
-	andi.l	#$FBFFFBFF,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
-	ori.l	#$04000400,d2
-	ori.l	#$00000400,d3
-	movem.l d0-d3,(a0)
-	rts
-
-butb_on:
+	andi.l	#$F3FFF3FF,d2
+	andi.l	#$F3FFF3FF,d3
+	ori.l	#$00000C00,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FBFFFBFF,d2
-	andi.l	#$FBFFFBFF,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
-	ori.l	#$04000000,d2
-	ori.l	#$04000400,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$F1FFF1FF,d2
-	andi.l	#$F1FFF1FF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$0E000000,d2
-	ori.l	#$0E000E00,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$E0FFE0FF,d2
-	andi.l	#$E0FFE0FF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$1F000000,d2
-	ori.l	#$1F001F00,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$F1FFF1FF,d2
-	andi.l	#$F1FFF1FF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$0E000000,d2
-	ori.l	#$0E000E00,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$FBFFFBFF,d2
-	andi.l	#$FBFFFBFF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$04000000,d2
-	ori.l	#$04000400,d3
-	movem.l d0-d3,(a0)
-	rts
-
-butc_off:
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$BFFFBFFF,d2
-	andi.l	#$BFFFBFFF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
-	ori.l	#$00000000,d2
-	ori.l	#$40004000,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFFFFFF,d0
-	andi.l	#$FFFFFFFF,d1
-	andi.l	#$1FFF1FFF,d2
-	andi.l	#$1FFF1FFF,d3
-	ori.l	#$00000000,d0
-	ori.l	#$00000000,d1
+	andi.l	#$9FFF9FFF,d2
+	andi.l	#$9FFF9FFF,d3
 	ori.l	#$00006000,d2
-	ori.l	#$80008000,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
-	andi.l	#$FFFEFFFE,d0
-	andi.l	#$FFFEFFFE,d1
-	andi.l	#$0FFF0FFF,d2
-	andi.l	#$0FFF0FFF,d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
 	ori.l	#$00000000,d0
-	ori.l	#$00010001,d1
-	ori.l	#$1000F000,d2
-	ori.l	#$00001000,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d3
-	andi.l	#$FFFCFFFC,d0
-	andi.l	#$FFFCFFFC,d1
+	ori.l	#$00000000,d1
 	andi.l	#$1FFF1FFF,d2
 	andi.l	#$1FFF1FFF,d3
-	ori.l	#$00000001,d0
-	ori.l	#$00020002,d1
-	ori.l	#$2000E000,d2
-	ori.l	#$00002000,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	ori.l	#$0000E000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFEFFFE,d0
 	andi.l	#$FFFEFFFE,d1
-	andi.l	#$3FFF3FFF,d2
-	andi.l	#$3FFF3FFF,d3
 	ori.l	#$00000001,d0
 	ori.l	#$00000000,d1
-	ori.l	#$C000C000,d2
-	ori.l	#$0000C000,d3
-	movem.l d0-d3,(a0)
+	andi.l	#$3FFF3FFF,d2
+	andi.l	#$3FFF3FFF,d3
+	ori.l	#$0000C000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00000001,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
 	rts
 
-butc_on:
+abc1_update:
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$BFFFBFFF,d2
-	andi.l	#$BFFFBFFF,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
-	ori.l	#$40000000,d2
-	ori.l	#$40004000,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFFFFFF,d0
 	andi.l	#$FFFFFFFF,d1
-	andi.l	#$1FFF1FFF,d2
-	andi.l	#$1FFF1FFF,d3
 	ori.l	#$00000000,d0
 	ori.l	#$00000000,d1
-	ori.l	#$E0000000,d2
-	ori.l	#$E000E000,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	andi.l	#$FF9FFF9F,d2
+	andi.l	#$FF9FFF9F,d3
+	ori.l	#$00600000,d2
+	ori.l	#$00600060,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
-	andi.l	#$FFFEFFFE,d0
-	andi.l	#$FFFEFFFE,d1
-	andi.l	#$0FFF0FFF,d2
-	andi.l	#$0FFF0FFF,d3
-	ori.l	#$00010000,d0
-	ori.l	#$00010001,d1
-	ori.l	#$F0000000,d2
-	ori.l	#$F000F000,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF1FFF1F,d2
+	andi.l	#$FF1FFF1F,d3
+	ori.l	#$00E00000,d2
+	ori.l	#$00E000E0,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
-	andi.l	#$FFFCFFFC,d0
-	andi.l	#$FFFCFFFC,d1
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF3FFF3F,d2
+	andi.l	#$FF3FFF3F,d3
+	ori.l	#$00C00000,d2
+	ori.l	#$00C000C0,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F9FFF9FF,d2
+	andi.l	#$F9FFF9FF,d3
+	ori.l	#$00000600,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F1FFF1FF,d2
+	andi.l	#$F1FFF1FF,d3
+	ori.l	#$00000E00,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F3FFF3FF,d2
+	andi.l	#$F3FFF3FF,d3
+	ori.l	#$00000C00,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$9FFF9FFF,d2
+	andi.l	#$9FFF9FFF,d3
+	ori.l	#$00006000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
 	andi.l	#$1FFF1FFF,d2
 	andi.l	#$1FFF1FFF,d3
-	ori.l	#$00030000,d0
-	ori.l	#$00030003,d1
-	ori.l	#$E0000000,d2
-	ori.l	#$E000E000,d3
-	movem.l d0-d3,(a0)
-	lea 160(a0),a0
+	ori.l	#$0000E000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d3
 	andi.l	#$FFFEFFFE,d0
 	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00000001,d0
+	ori.l	#$00000000,d1
 	andi.l	#$3FFF3FFF,d2
 	andi.l	#$3FFF3FFF,d3
+	ori.l	#$0000C000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00000001,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	rts
+
+abc2_update:
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF9FFF9F,d2
+	andi.l	#$FF9FFF9F,d3
+	ori.l	#$00000060,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF1FFF1F,d2
+	andi.l	#$FF1FFF1F,d3
+	ori.l	#$000000E0,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF3FFF3F,d2
+	andi.l	#$FF3FFF3F,d3
+	ori.l	#$000000C0,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F9FFF9FF,d2
+	andi.l	#$F9FFF9FF,d3
+	ori.l	#$06000000,d2
+	ori.l	#$06000600,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F1FFF1FF,d2
+	andi.l	#$F1FFF1FF,d3
+	ori.l	#$0E000000,d2
+	ori.l	#$0E000E00,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F3FFF3FF,d2
+	andi.l	#$F3FFF3FF,d3
+	ori.l	#$0C000000,d2
+	ori.l	#$0C000C00,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$9FFF9FFF,d2
+	andi.l	#$9FFF9FFF,d3
+	ori.l	#$00006000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$1FFF1FFF,d2
+	andi.l	#$1FFF1FFF,d3
+	ori.l	#$0000E000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00000001,d0
+	ori.l	#$00000000,d1
+	andi.l	#$3FFF3FFF,d2
+	andi.l	#$3FFF3FFF,d3
+	ori.l	#$0000C000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00000001,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	rts
+
+abc3_update:
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF9FFF9F,d2
+	andi.l	#$FF9FFF9F,d3
+	ori.l	#$00600000,d2
+	ori.l	#$00600060,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF1FFF1F,d2
+	andi.l	#$FF1FFF1F,d3
+	ori.l	#$00E00000,d2
+	ori.l	#$00E000E0,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF3FFF3F,d2
+	andi.l	#$FF3FFF3F,d3
+	ori.l	#$00C00000,d2
+	ori.l	#$00C000C0,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F9FFF9FF,d2
+	andi.l	#$F9FFF9FF,d3
+	ori.l	#$06000000,d2
+	ori.l	#$06000600,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F1FFF1FF,d2
+	andi.l	#$F1FFF1FF,d3
+	ori.l	#$0E000000,d2
+	ori.l	#$0E000E00,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F3FFF3FF,d2
+	andi.l	#$F3FFF3FF,d3
+	ori.l	#$0C000000,d2
+	ori.l	#$0C000C00,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$9FFF9FFF,d2
+	andi.l	#$9FFF9FFF,d3
+	ori.l	#$00006000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$1FFF1FFF,d2
+	andi.l	#$1FFF1FFF,d3
+	ori.l	#$0000E000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00000001,d0
+	ori.l	#$00000000,d1
+	andi.l	#$3FFF3FFF,d2
+	andi.l	#$3FFF3FFF,d3
+	ori.l	#$0000C000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00000001,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	rts
+
+abc4_update:
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF9FFF9F,d2
+	andi.l	#$FF9FFF9F,d3
+	ori.l	#$00000060,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF1FFF1F,d2
+	andi.l	#$FF1FFF1F,d3
+	ori.l	#$000000E0,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF3FFF3F,d2
+	andi.l	#$FF3FFF3F,d3
+	ori.l	#$000000C0,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F9FFF9FF,d2
+	andi.l	#$F9FFF9FF,d3
+	ori.l	#$00000600,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F1FFF1FF,d2
+	andi.l	#$F1FFF1FF,d3
+	ori.l	#$00000E00,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F3FFF3FF,d2
+	andi.l	#$F3FFF3FF,d3
+	ori.l	#$00000C00,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$9FFF9FFF,d2
+	andi.l	#$9FFF9FFF,d3
+	ori.l	#$60000000,d2
+	ori.l	#$60006000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$1FFF1FFF,d2
+	andi.l	#$1FFF1FFF,d3
+	ori.l	#$E0000000,d2
+	ori.l	#$E000E000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
 	ori.l	#$00010000,d0
 	ori.l	#$00010001,d1
+	andi.l	#$3FFF3FFF,d2
+	andi.l	#$3FFF3FFF,d3
 	ori.l	#$C0000000,d2
 	ori.l	#$C000C000,d3
-	movem.l d0-d3,(a0)
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00010000,d0
+	ori.l	#$00010001,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
 	rts
 
-notap_off:
-	movem.l (a0),d0-d1
-	andi.l	#$55555555,d0
-	andi.l	#$55555555,d1
-	ori.l	#$0000AAAA,d0
-	ori.l	#$0000AAAA,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00010001,d0
-	andi.l	#$00010001,d1
-	ori.l	#$5554AAAA,d0
-	ori.l	#$0000FFFE,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00010001,d0
-	andi.l	#$00010001,d1
-	ori.l	#$5554AAAA,d0
-	ori.l	#$0000FFFE,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$5554AAAB,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$5550AAAE,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$00007FF0,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$03200320,d0
-	andi.l	#$03200320,d1
-	ori.l	#$0CC0F800,d0
-	ori.l	#$00000CDF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$73F06FF0,d0
-	ori.l	#$0000F3FF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$54006C00,d0
-	ori.l	#$0000D7FF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$00007FF0,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$0000800E,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$00000001,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
+abc5_update:
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
 	ori.l	#$00000000,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
 	ori.l	#$00000000,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
+	ori.l	#$00000000,d1
+	andi.l	#$FF9FFF9F,d2
+	andi.l	#$FF9FFF9F,d3
+	ori.l	#$00600000,d2
+	ori.l	#$00600060,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
 	ori.l	#$00000000,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
+	ori.l	#$00000000,d1
+	andi.l	#$FF1FFF1F,d2
+	andi.l	#$FF1FFF1F,d3
+	ori.l	#$00E00000,d2
+	ori.l	#$00E000E0,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
 	ori.l	#$00000000,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
+	ori.l	#$00000000,d1
+	andi.l	#$FF3FFF3F,d2
+	andi.l	#$FF3FFF3F,d3
+	ori.l	#$00C00000,d2
+	ori.l	#$00C000C0,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F9FFF9FF,d2
+	andi.l	#$F9FFF9FF,d3
+	ori.l	#$00000600,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F1FFF1FF,d2
+	andi.l	#$F1FFF1FF,d3
+	ori.l	#$00000E00,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F3FFF3FF,d2
+	andi.l	#$F3FFF3FF,d3
+	ori.l	#$00000C00,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$9FFF9FFF,d2
+	andi.l	#$9FFF9FFF,d3
+	ori.l	#$60000000,d2
+	ori.l	#$60006000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$1FFF1FFF,d2
+	andi.l	#$1FFF1FFF,d3
+	ori.l	#$E0000000,d2
+	ori.l	#$E000E000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00010000,d0
+	ori.l	#$00010001,d1
+	andi.l	#$3FFF3FFF,d2
+	andi.l	#$3FFF3FFF,d3
+	ori.l	#$C0000000,d2
+	ori.l	#$C000C000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00010000,d0
+	ori.l	#$00010001,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
 	rts
 
-notap_on:
+abc6_update:
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF9FFF9F,d2
+	andi.l	#$FF9FFF9F,d3
+	ori.l	#$00000060,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF1FFF1F,d2
+	andi.l	#$FF1FFF1F,d3
+	ori.l	#$000000E0,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF3FFF3F,d2
+	andi.l	#$FF3FFF3F,d3
+	ori.l	#$000000C0,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F9FFF9FF,d2
+	andi.l	#$F9FFF9FF,d3
+	ori.l	#$06000000,d2
+	ori.l	#$06000600,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F1FFF1FF,d2
+	andi.l	#$F1FFF1FF,d3
+	ori.l	#$0E000000,d2
+	ori.l	#$0E000E00,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F3FFF3FF,d2
+	andi.l	#$F3FFF3FF,d3
+	ori.l	#$0C000000,d2
+	ori.l	#$0C000C00,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$9FFF9FFF,d2
+	andi.l	#$9FFF9FFF,d3
+	ori.l	#$60000000,d2
+	ori.l	#$60006000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$1FFF1FFF,d2
+	andi.l	#$1FFF1FFF,d3
+	ori.l	#$E0000000,d2
+	ori.l	#$E000E000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00010000,d0
+	ori.l	#$00010001,d1
+	andi.l	#$3FFF3FFF,d2
+	andi.l	#$3FFF3FFF,d3
+	ori.l	#$C0000000,d2
+	ori.l	#$C000C000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00010000,d0
+	ori.l	#$00010001,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	rts
+
+abc7_update:
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF9FFF9F,d2
+	andi.l	#$FF9FFF9F,d3
+	ori.l	#$00600000,d2
+	ori.l	#$00600060,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF1FFF1F,d2
+	andi.l	#$FF1FFF1F,d3
+	ori.l	#$00E00000,d2
+	ori.l	#$00E000E0,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$FF3FFF3F,d2
+	andi.l	#$FF3FFF3F,d3
+	ori.l	#$00C00000,d2
+	ori.l	#$00C000C0,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F9FFF9FF,d2
+	andi.l	#$F9FFF9FF,d3
+	ori.l	#$06000000,d2
+	ori.l	#$06000600,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F1FFF1FF,d2
+	andi.l	#$F1FFF1FF,d3
+	ori.l	#$0E000000,d2
+	ori.l	#$0E000E00,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$F3FFF3FF,d2
+	andi.l	#$F3FFF3FF,d3
+	ori.l	#$0C000000,d2
+	ori.l	#$0C000C00,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$9FFF9FFF,d2
+	andi.l	#$9FFF9FFF,d3
+	ori.l	#$60000000,d2
+	ori.l	#$60006000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFFFFFF,d0
+	andi.l	#$FFFFFFFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00000000,d1
+	andi.l	#$1FFF1FFF,d2
+	andi.l	#$1FFF1FFF,d3
+	ori.l	#$E0000000,d2
+	ori.l	#$E000E000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00010000,d0
+	ori.l	#$00010001,d1
+	andi.l	#$3FFF3FFF,d2
+	andi.l	#$3FFF3FFF,d3
+	ori.l	#$C0000000,d2
+	ori.l	#$C000C000,d3
+	movem.l	d0-d3,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d3
+	andi.l	#$FFFEFFFE,d0
+	andi.l	#$FFFEFFFE,d1
+	ori.l	#$00010000,d0
+	ori.l	#$00010001,d1
+	andi.l	#$FFFFFFFF,d2
+	andi.l	#$FFFFFFFF,d3
+	ori.l	#$00000000,d2
+	ori.l	#$00000000,d3
+	movem.l	d0-d3,(a0)
+	rts
+
+po0_update:
+	movem.l (a0),d0-d1
+	andi.l	#$F3CFF3CF,d0
+	andi.l	#$F3CFF3CF,d1
+	ori.l	#$00000C30,d0
+	ori.l	#$00000C30,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$E79FE79F,d0
+	andi.l	#$E79FE79F,d1
+	ori.l	#$00001860,d0
+	ori.l	#$00001860,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$EFBFEFBF,d0
+	andi.l	#$EFBFEFBF,d1
+	ori.l	#$00001040,d0
+	ori.l	#$00001040,d1
+	movem.l	d0-d1,(a0)
+	rts
+
+po1_update:
+	movem.l (a0),d0-d1
+	andi.l	#$F3CFF3CF,d0
+	andi.l	#$F3CFF3CF,d1
+	ori.l	#$00300C00,d0
+	ori.l	#$00300C30,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$E79FE79F,d0
+	andi.l	#$E79FE79F,d1
+	ori.l	#$00601800,d0
+	ori.l	#$00601860,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$EF3FEF3F,d0
+	andi.l	#$EF3FEF3F,d1
+	ori.l	#$00C01000,d0
+	ori.l	#$00C010C0,d1
+	movem.l	d0-d1,(a0)
+	rts
+
+po2_update:
+	movem.l (a0),d0-d1
+	andi.l	#$F3CFF3CF,d0
+	andi.l	#$F3CFF3CF,d1
+	ori.l	#$0C000030,d0
+	ori.l	#$0C000C30,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$E79FE79F,d0
+	andi.l	#$E79FE79F,d1
+	ori.l	#$18000060,d0
+	ori.l	#$18001860,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$CFBFCFBF,d0
+	andi.l	#$CFBFCFBF,d1
+	ori.l	#$30000040,d0
+	ori.l	#$30003040,d1
+	movem.l	d0-d1,(a0)
+	rts
+
+po3_update:
+	movem.l (a0),d0-d1
+	andi.l	#$F3CFF3CF,d0
+	andi.l	#$F3CFF3CF,d1
+	ori.l	#$0C300000,d0
+	ori.l	#$0C300C30,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$E79FE79F,d0
+	andi.l	#$E79FE79F,d1
+	ori.l	#$18600000,d0
+	ori.l	#$18601860,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$CF3FCF3F,d0
+	andi.l	#$CF3FCF3F,d1
+	ori.l	#$30C00000,d0
+	ori.l	#$30C030C0,d1
+	movem.l	d0-d1,(a0)
+	rts
+
+n0_copy:
+	move.l	#$7BDE7BDE,(a0)+
+	move.l	#$00008421,(a0)+
+	rts
+
+n1_copy:
+	move.l	#$7BDE7BC0,(a0)+
+	move.l	#$001E843F,(a0)+
+	rts
+
+n2_copy:
+	move.l	#$7BDE781E,(a0)+
+	move.l	#$03C087E1,(a0)+
+	rts
+
+n3_copy:
+	move.l	#$7BDE7800,(a0)+
+	move.l	#$03DE87FF,(a0)+
+	rts
+
+n4_copy:
+	move.l	#$7BDE03DE,(a0)+
+	move.l	#$7800FC21,(a0)+
+	rts
+
+n5_copy:
+	move.l	#$7BDE03C0,(a0)+
+	move.l	#$781EFC3F,(a0)+
+	rts
+
+n6_copy:
+	move.l	#$7BDE001E,(a0)+
+	move.l	#$7BC0FFE1,(a0)+
+	rts
+
+n7_copy:
+	move.l	#$7BDE0000,(a0)+
+	move.l	#$7BDEFFFF,(a0)+
+	rts
+
+notap_update:
 	movem.l (a0),d0-d1
 	andi.l	#$55555555,d0
 	andi.l	#$55555555,d1
 	ori.l	#$AAAA0000,d0
 	ori.l	#$0000AAAA,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00010001,d0
 	andi.l	#$00010001,d1
 	ori.l	#$FFFE7FFE,d0
 	ori.l	#$7FFE8000,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00010001,d0
 	andi.l	#$00010001,d1
-	ori.l	#$E7E667E6,d0
-	ori.l	#$7FFE9818,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$FFFE7FFE,d0
+	ori.l	#$67E69818,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$C3C35BDA,d0
-	ori.l	#$67E6A425,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$E7E77FFE,d0
+	ori.l	#$43C2A425,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$C1835DBA,d0
-	ori.l	#$63C6A245,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$E3C77FFE,d0
+	ori.l	#$4182A245,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$E0076E76,d0
-	ori.l	#$718E9189,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$F18F7FFE,d0
+	ori.l	#$60069189,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$03200320,d0
 	andi.l	#$03200320,d1
-	ori.l	#$F00F74CE,d0
-	ori.l	#$781E8811,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$F81F7CDE,d0
+	ori.l	#$700E8811,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$F80F7BCE,d0
-	ori.l	#$7C3E8431,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$FC3F7FFE,d0
+	ori.l	#$780E8431,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$F81F7BDE,d0
-	ori.l	#$7C3E8421,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$FC3F7FFE,d0
+	ori.l	#$781E8421,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$F00F77EE,d0
-	ori.l	#$781E8811,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$F81F7FFE,d0
+	ori.l	#$700E8811,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$E0076E76,d0
-	ori.l	#$718E9189,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$F18F7FFE,d0
+	ori.l	#$60069189,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$C1835DBA,d0
-	ori.l	#$63C6A245,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$E3C77FFE,d0
+	ori.l	#$4182A245,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$C3C35BDA,d0
-	ori.l	#$67E6A425,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$E7E77FFE,d0
+	ori.l	#$43C2A425,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$E7E767E6,d0
-	ori.l	#$7FFE9819,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$FFFF7FFE,d0
+	ori.l	#$67E69819,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
 	ori.l	#$FFFF7FFE,d0
 	ori.l	#$7FFE8001,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
 	ori.l	#$FFFF0000,d0
 	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
+	movem.l	d0-d1,(a0)
 	rts
 
-notpad_off:
+notap_delete:
 	movem.l (a0),d0-d1
-	andi.l	#$40004000,d0
-	andi.l	#$40004000,d1
-	ori.l	#$0000BFFF,d0
-	ori.l	#$BFFF0000,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$4000B7DC,d0
-	ori.l	#$BFFF4000,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$4823B3C8,d0
-	ori.l	#$A79C5040,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$80008000,d0
-	andi.l	#$80008000,d1
-	ori.l	#$124B6DB0,d0
-	ori.l	#$430C2CB0,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$24909864,d0
-	ori.l	#$C71F1861,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$0820D34D,d0
-	ori.l	#$EFBE1042,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$1040E79D,d0
-	ori.l	#$DF7E2080,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$0000DFBE,d0
-	ori.l	#$FFFF0000,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$0000FFFF,d0
-	ori.l	#$FFFF0000,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$00000000,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$FFFFFFFF,d0
-	ori.l	#$00000000,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$00000000,d0
-	ori.l	#$0000FFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
-	movem.l (a0),d0-d1
-	andi.l	#$00000000,d0
-	andi.l	#$00000000,d1
-	ori.l	#$FFFFFFFF,d0
-	ori.l	#$00000000,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	andi.l	#$55555555,d0
+	andi.l	#$55555555,d1
+	ori.l	#$0000AAAA,d0
+	ori.l	#$0000AAAA,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00010001,d0
 	andi.l	#$00010001,d1
-	ori.l	#$007E0000,d0
+	ori.l	#$5554AAAA,d0
 	ori.l	#$0000FFFE,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00010001,d0
+	andi.l	#$00010001,d1
+	ori.l	#$5554AAAA,d0
+	ori.l	#$0000FFFE,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$FFFFFFFF,d0
-	ori.l	#$00000000,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$5554AAAB,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
-	andi.l	#$7FFF7FFF,d0
-	andi.l	#$7FFF7FFF,d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$5550AAAE,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$00007FF0,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$03200320,d0
+	andi.l	#$03200320,d1
+	ori.l	#$04C0F000,d0
+	ori.l	#$08000CDF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$10000C00,d0
+	ori.l	#$63F0F3FF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$10002800,d0
+	ori.l	#$4400D7FF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$00007FF0,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$0000800E,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$00000001,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
 	ori.l	#$00000000,d0
-	ori.l	#$00008000,d1
-	movem.l d0-d1,(a0)
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$00000000,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$00000000,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$00000000,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
 	rts
 
-notpad_on:
+notpad_update:
 	movem.l (a0),d0-d1
 	andi.l	#$40004000,d0
 	andi.l	#$40004000,d1
 	ori.l	#$BFFF0000,d0
 	ori.l	#$0000BFFF,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
 	ori.l	#$FFFF7FFE,d0
 	ori.l	#$7FFE8001,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$E7E767E6,d0
-	ori.l	#$7FFE9819,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$FFFF7FFE,d0
+	ori.l	#$67E69819,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$80008000,d0
 	andi.l	#$80008000,d1
-	ori.l	#$43C35BDA,d0
-	ori.l	#$67E62425,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$67E77FFE,d0
+	ori.l	#$43C22425,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$C1835DBA,d0
-	ori.l	#$63C6A245,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$E3C77FFE,d0
+	ori.l	#$4182A245,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$E0076E76,d0
-	ori.l	#$718E9189,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$F18F7FFE,d0
+	ori.l	#$60069189,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$F00F77EE,d0
-	ori.l	#$781E8811,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$F81F7FFE,d0
+	ori.l	#$700E8811,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$F80F7BCE,d0
-	ori.l	#$7C3E8431,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$FC3F7FFE,d0
+	ori.l	#$780E8431,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$F81F7BDE,d0
-	ori.l	#$7C3E8421,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$FC3F7FFE,d0
+	ori.l	#$781E8421,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$F00F77EE,d0
-	ori.l	#$781E8811,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$F81F7FFE,d0
+	ori.l	#$700E8811,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$E0076E76,d0
-	ori.l	#$718E9189,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$F18F7FFE,d0
+	ori.l	#$60069189,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$C1835DBA,d0
-	ori.l	#$63C6A245,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$E3C77FFE,d0
+	ori.l	#$4182A245,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
-	ori.l	#$C3C35BDA,d0
-	ori.l	#$67E6A425,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$E7E77FFE,d0
+	ori.l	#$43C2A425,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00010001,d0
 	andi.l	#$00010001,d1
-	ori.l	#$E7E667E6,d0
-	ori.l	#$7FFE9818,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	ori.l	#$FFFE7FFE,d0
+	ori.l	#$67E69818,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$00000000,d0
 	andi.l	#$00000000,d1
 	ori.l	#$FFFF7FFE,d0
 	ori.l	#$7FFE8001,d1
-	movem.l d0-d1,(a0)
-	lea 160(a0),a0
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
 	movem.l (a0),d0-d1
 	andi.l	#$7FFF7FFF,d0
 	andi.l	#$7FFF7FFF,d1
 	ori.l	#$80000000,d0
 	ori.l	#$00008000,d1
-	movem.l d0-d1,(a0)
+	movem.l	d0-d1,(a0)
+	rts
+
+notpad_delete:
+	movem.l (a0),d0-d1
+	andi.l	#$40004000,d0
+	andi.l	#$40004000,d1
+	ori.l	#$0000BFFF,d0
+	ori.l	#$BFFF0000,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$4000B7DC,d0
+	ori.l	#$BFFF4000,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$4823B3C8,d0
+	ori.l	#$A79C5040,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$80008000,d0
+	andi.l	#$80008000,d1
+	ori.l	#$124B6DB0,d0
+	ori.l	#$430C2CB0,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$24919865,d0
+	ori.l	#$C71E1861,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$0822D34F,d0
+	ori.l	#$EFBC1042,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$1040E79D,d0
+	ori.l	#$DF7E2080,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$0000DFBE,d0
+	ori.l	#$FFFF0000,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$0000FFFF,d0
+	ori.l	#$FFFF0000,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$00000000,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$FFFFFFFF,d0
+	ori.l	#$00000000,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$00000000,d0
+	ori.l	#$0000FFFF,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$FFFFFFFF,d0
+	ori.l	#$00000000,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00010001,d0
+	andi.l	#$00010001,d1
+	ori.l	#$007E0000,d0
+	ori.l	#$0000FFFE,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$00000000,d0
+	andi.l	#$00000000,d1
+	ori.l	#$FFFFFFFF,d0
+	ori.l	#$00000000,d1
+	movem.l	d0-d1,(a0)
+	lea	160(a0),a0
+	movem.l (a0),d0-d1
+	andi.l	#$7FFF7FFF,d0
+	andi.l	#$7FFF7FFF,d1
+	ori.l	#$00000000,d0
+	ori.l	#$00008000,d1
+	movem.l	d0-d1,(a0)
 	rts
 
 

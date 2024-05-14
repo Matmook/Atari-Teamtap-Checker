@@ -13,6 +13,9 @@ enter_debug_mode:
 
 .debug_mode_loop:
 
+    lea     string_bits,a3
+    bsr     print_message
+
     ; TeamTap A?
     moveq.l #(1-1),d6
     lea     string_TeamTapA,a3
@@ -82,8 +85,6 @@ enter_debug_mode:
     rts
 
 dump_regs:
-    lea     string_bits,a3
-    bsr     print_message
 
 .print_reg:
     ; convert long to hex string

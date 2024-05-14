@@ -176,6 +176,14 @@ TEAMTAP_A_DETECTED_BIT  .equ    0
 TEAMTAP_B_DETECTED_BIT  .equ    1
 TeamTapDetectionFlag:   .ds.b   1
 
+; ____ ____ APRL DUB_ 147* C_25 80O_ 369#
+JAGPAD_MASK_RLDU	.equ	$003C0000
+JAGPAD_MASK_PO		.equ	$00400020
+JAGPAD_MASK_ABC		.equ	$00820800
+JAGPAD_MASK_NUMPAD  .equ	$0000F3CF
+JAGPAD_MASK_123		.equ	$00008208
+JAGPAD_MASK_ALL		.equ	$00FEFBEF
+
 ; 1st long for current, 2nd for edge, ...
 JapPadsAState:		.ds.l	(4*2)
 JapPadsBState:		.ds.l	(4*2)
