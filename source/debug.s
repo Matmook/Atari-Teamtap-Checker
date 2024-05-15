@@ -3,9 +3,6 @@
 
     .text
 enter_debug_mode:    
-
-    jsr     clear_screen 
-
     ; TeamTap detection and read (initial read)
     jsr     TeamTap_detect
     move.b  d0,TeamTapDetectionFlag

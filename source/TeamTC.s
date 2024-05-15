@@ -6,10 +6,42 @@
 
     jsr     save_context
 
+    lea     string_greetings,a3
+    jsr     print_message
+
+    jsr     detect_ste    
+    cmp.b   #2,d0
+    beq.s   .this_is_a_falcon
+    cmp.b   #1,d0
+    beq.s   .this_is_an_ste
+
+    ; that's not a compliant machine
+    lea     string_wrong_machine,a3
+    jsr     print_message
+    jsr     wait_key_press
+    jsr     restore_context  
+    jsr     exit_application
+    ; GO BACK TO THE SYSTEM! 
+
+.this_is_a_falcon:
+    ; not an STE, use text mode!
+    lea     string_falcon,a3
+    jsr     print_message
+    jsr     enter_debug_mode
+    jsr     restore_context  
+    jsr     exit_application
+    ; GO BACK TO THE SYSTEM!    
+
+.this_is_an_ste:
+    lea     string_press_a_key,a3
+    jsr     print_message
+    jsr     wait_key_press
+    jsr     switch_to_low_res
+
     ; get screen buffer address
-    move.w  #2, -(a7)               ; get physbase
+    move.w  #2, -(sp)               ; get physbase
     trap    #14                     ; call XBIOS
-    addq.l  #2, a7                  ; clean up stack
+    addq.l  #2, sp                  ; clean up stack
     move.l  d0, physbase            ; save it
 
     move.l  physbase, a0            ; a0 points to screen
@@ -189,8 +221,15 @@
     ; a key has been pressed!
     cmp.b   #'d',d0
     bne.s   .exit
+
+    jsr     clear_screen 
+    jsr     restore_resolution
     jsr     enter_debug_mode
+    bra.s   .get_out
+
 .exit:
+    jsr     restore_resolution
+.get_out:    
     jsr     restore_context  
     jsr     exit_application
     ; GO BACK TO THE SYSTEM!
@@ -213,101 +252,6 @@ pad_update_part:
     jsr     (a4)                    ; and run it!
 .no_change:
     rts
-
-
-    ; 9 positions
-pad_update_table:
-    dc.l    $00000000,d0_copy
-    dc.l    $00040000,d1_copy
-    dc.l    $00240000,d2_copy
-    dc.l    $00200000,d3_copy
-    dc.l    $00280000,d4_copy
-    dc.l    $00080000,d5_copy
-    dc.l    $00180000,d6_copy
-    dc.l    $00100000,d7_copy
-    dc.l    $00140000,d8_copy
-    dc.l    $FFFFFFFF
-
-    ; 8 positions
-abc_update_table:
-    dc.l    $00000000,abc0_update
-    dc.l    $00800000,abc1_update
-    dc.l    $00020000,abc2_update
-    dc.l    $00820000,abc3_update
-    dc.l    $00000800,abc4_update
-    dc.l    $00800800,abc5_update
-    dc.l    $00020800,abc6_update
-    dc.l    $00820800,abc7_update
-    dc.l    $FFFFFFFF    
-
-    ; 8 positions
-num_update_table_123:
-    dc.l    $00000000,n0_copy
-    dc.l    $00000008,n1_copy
-    dc.l    $00000200,n2_copy
-    dc.l    $00000208,n3_copy
-    dc.l    $00008000,n4_copy
-    dc.l    $00008008,n5_copy
-    dc.l    $00008200,n6_copy
-    dc.l    $00008208,n7_copy
-    dc.l    $FFFFFFFF    
-
-    ; 8 positions
-num_update_table_456:
-    dc.l    $00000000,n0_copy
-    dc.l    $00000004,n1_copy
-    dc.l    $00000100,n2_copy
-    dc.l    $00000104,n3_copy
-    dc.l    $00004000,n4_copy
-    dc.l    $00004004,n5_copy
-    dc.l    $00004100,n6_copy
-    dc.l    $00004104,n7_copy
-    dc.l    $FFFFFFFF    
-
-    ; 8 positions
-num_update_table_789:
-    dc.l    $00000000,n0_copy
-    dc.l    $00000002,n1_copy
-    dc.l    $00000080,n2_copy
-    dc.l    $00000082,n3_copy
-    dc.l    $00002000,n4_copy
-    dc.l    $00002002,n5_copy
-    dc.l    $00002080,n6_copy
-    dc.l    $00002082,n7_copy
-    dc.l    $FFFFFFFF    
-
-    ; 8 positions
-num_update_table_x0x:
-    dc.l    $00000000,n0_copy
-    dc.l    $00000001,n1_copy
-    dc.l    $00000040,n2_copy
-    dc.l    $00000041,n3_copy
-    dc.l    $00001000,n4_copy
-    dc.l    $00001001,n5_copy
-    dc.l    $00001040,n6_copy
-    dc.l    $00001041,n7_copy
-    dc.l    $FFFFFFFF            
-
-    ; 4 positions
-po_update_table:
-    dc.l    $00000000,po0_update
-    dc.l    $00000020,po1_update
-    dc.l    $00400000,po2_update
-    dc.l    $00400020,po3_update
-    dc.l    $FFFFFFFF
-
-    ; 8 pads
-pad_position_table:
-    dc.l    (16/2)+(160*155)
-    dc.l    (48/2)+(160*109)
-    dc.l    (80/2)+(160*155)
-    dc.l    (112/2)+(160*109)
-    dc.l    (144/2)+(160*155)
-    dc.l    (176/2)+(160*109)
-    dc.l    (208/2)+(160*155)
-    dc.l    (240/2)+(160*109)
-
-
 
 ; update TeamTaps picture
 update_teamtaps:
@@ -376,6 +320,7 @@ update_teamtaps:
     .include "debug.s"
     .include "pads.s"
     .include "pixmap_mask.s"
+    .include "hardware_detect.s"
 
 ; ***************************
 ; text functions
@@ -502,9 +447,9 @@ clear_screen:
     rts
 
 wait_vbl:
-    move.w  #37, -(a7)               ; wait VBL
+    move.w  #37, -(sp)               ; wait VBL
     trap    #14
-    addq.l  #2, a7
+    addq.l  #2, sp
     rts
 
 save_context:
@@ -513,49 +458,53 @@ save_context:
     trap    #1                     ; call gemdos
     addq.l  #6, sp                 ; clear up stack
     move.l  d0, previous_stack          ; backup old stack pointer
+    rts
 
+switch_to_low_res:
     ; save the old palette; previous_palette
     move.l  #previous_palette, a0         ; put backup address in a0
     movem.l $ffff8240, d0-d7         ; all palettes in d0-d7
     movem.l d0-d7, (a0)              ; move data into previous_palette
 
     ; saves the old screen adress
-    move.w  #2, -(a7)                ; get physbase
+    move.w  #2, -(sp)                ; get physbase
     trap    #14
-    addq.l  #2, a7
+    addq.l  #2, sp
     move.l  d0, previous_screen           ; save old screen address
 
     ; save the old resolution into previous_resolution
-    move.w  #4, -(a7)               ; get resolution
+    move.w  #4, -(sp)               ; get resolution
     trap    #14
-    addq.l  #2, a7
+    addq.l  #2, sp
     move.w  d0, previous_resolution ; save resolution
 
     ; change resolution to low (0)    
-    move.w  #0, -(a7)               ; low resolution
-    move.l  #-1, -(a7)              ; keep physbase
-    move.l  #-1, -(a7)              ; keep logbase
-    move.w  #5, -(a7)               ; change screen
+    move.w  #0, -(sp)               ; low resolution
+    move.l  #-1, -(sp)              ; keep physbase
+    move.l  #-1, -(sp)              ; keep logbase
+    move.w  #5, -(sp)               ; change screen
     trap    #14
-    add.l   #12, a7
+    add.l   #12, sp
     rts
 
-restore_context:
+restore_resolution:
     ;restores the old resolution and screen adress
     move.w  previous_resolution, d0 ; res in d0
-    move.w  d0, -(a7)               ; push resolution
+    move.w  d0, -(sp)               ; push resolution
     move.l  previous_screen, d0     ; screen in d0
-    move.l  d0, -(a7)               ; push physbase
-    move.l  d0, -(a7)               ; push logbase
-    move.w  #5, -(a7)               ; change screen
+    move.l  d0, -(sp)               ; push physbase
+    move.l  d0, -(sp)               ; push logbase
+    move.w  #5, -(sp)               ; change screen
     trap    #14
-    add.l   #12, a7
+    add.l   #12, sp
 
     ; restores the old palette
     move.l  #previous_palette, a0   ; palette pointer in a0
     movem.l (a0), d0-d7             ; move palette data
     movem.l d0-d7, $ffff8240        ; smack palette in
+    rts
 
+restore_context:
     ; set user mode again
     move.l  previous_stack, -(sp)   ; restore old stack pointer
     move.w  #32, -(sp)              ; back to user mode
@@ -568,6 +517,116 @@ exit_application:
 	trap	#1			            ; GEMDOS call
 
     .data
+
+    .long
+string_falcon:
+    .dc.b   "Falcon detected, switching to text mode!",13,10,0
+
+    .long
+string_wrong_machine:
+    .dc.b   "Sorry, no Extended Joypad ports!",13,10,0
+
+    .long
+string_greetings:
+    .dc.b   "Extended Joypad ports Tester by Matmook",13,10
+    .dc.b   "Matthieu Barreteau - May 2024",13,10,13,10,0
+
+    .long
+string_press_a_key:
+    .dc.b   "press a key when ready...",13,10,0
+
+    ; 9 positions
+pad_update_table:
+    dc.l    $00000000,d0_copy
+    dc.l    $00040000,d1_copy
+    dc.l    $00240000,d2_copy
+    dc.l    $00200000,d3_copy
+    dc.l    $00280000,d4_copy
+    dc.l    $00080000,d5_copy
+    dc.l    $00180000,d6_copy
+    dc.l    $00100000,d7_copy
+    dc.l    $00140000,d8_copy
+    dc.l    $FFFFFFFF
+
+    ; 8 positions
+abc_update_table:
+    dc.l    $00000000,abc0_update
+    dc.l    $00800000,abc1_update
+    dc.l    $00020000,abc2_update
+    dc.l    $00820000,abc3_update
+    dc.l    $00000800,abc4_update
+    dc.l    $00800800,abc5_update
+    dc.l    $00020800,abc6_update
+    dc.l    $00820800,abc7_update
+    dc.l    $FFFFFFFF    
+
+    ; 8 positions
+num_update_table_123:
+    dc.l    $00000000,n0_copy
+    dc.l    $00000008,n1_copy
+    dc.l    $00000200,n2_copy
+    dc.l    $00000208,n3_copy
+    dc.l    $00008000,n4_copy
+    dc.l    $00008008,n5_copy
+    dc.l    $00008200,n6_copy
+    dc.l    $00008208,n7_copy
+    dc.l    $FFFFFFFF    
+
+    ; 8 positions
+num_update_table_456:
+    dc.l    $00000000,n0_copy
+    dc.l    $00000004,n1_copy
+    dc.l    $00000100,n2_copy
+    dc.l    $00000104,n3_copy
+    dc.l    $00004000,n4_copy
+    dc.l    $00004004,n5_copy
+    dc.l    $00004100,n6_copy
+    dc.l    $00004104,n7_copy
+    dc.l    $FFFFFFFF    
+
+    ; 8 positions
+num_update_table_789:
+    dc.l    $00000000,n0_copy
+    dc.l    $00000002,n1_copy
+    dc.l    $00000080,n2_copy
+    dc.l    $00000082,n3_copy
+    dc.l    $00002000,n4_copy
+    dc.l    $00002002,n5_copy
+    dc.l    $00002080,n6_copy
+    dc.l    $00002082,n7_copy
+    dc.l    $FFFFFFFF    
+
+    ; 8 positions
+num_update_table_x0x:
+    dc.l    $00000000,n0_copy
+    dc.l    $00000001,n1_copy
+    dc.l    $00000040,n2_copy
+    dc.l    $00000041,n3_copy
+    dc.l    $00001000,n4_copy
+    dc.l    $00001001,n5_copy
+    dc.l    $00001040,n6_copy
+    dc.l    $00001041,n7_copy
+    dc.l    $FFFFFFFF            
+
+    ; 4 positions
+po_update_table:
+    dc.l    $00000000,po0_update
+    dc.l    $00000020,po1_update
+    dc.l    $00400000,po2_update
+    dc.l    $00400020,po3_update
+    dc.l    $FFFFFFFF
+
+    ; 8 pads
+pad_position_table:
+    dc.l    (16/2)+(160*155)
+    dc.l    (48/2)+(160*109)
+    dc.l    (80/2)+(160*155)
+    dc.l    (112/2)+(160*109)
+    dc.l    (144/2)+(160*155)
+    dc.l    (176/2)+(160*109)
+    dc.l    (208/2)+(160*155)
+    dc.l    (240/2)+(160*109)
+
     .include "pixmap.s"             ; we need some bitmaps!
 
     .bss
