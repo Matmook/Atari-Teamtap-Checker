@@ -68,116 +68,117 @@
     move.l  d7,d0                   ; copy flags
     and.l   #JAGPAD_MASK_RLDU,d0    ; get pad bits
     beq.s   .no_RLDU_change
-
     move.l  d6,d0                   ; copy flags
     and.l   #JAGPAD_MASK_RLDU,d0    ; get pad bits
 
-    lea     pad_update_table,a2
-.search_pad_update:
-    move.l  (a2)+,d1
-    bmi.s   .no_RLDU_change          ; end of table, unknow value!
-
-    move.l  (a2)+,d2                ; read value
-    cmp.l   d0,d1                   ; match?
-    bne.s   .search_pad_update      ; nope
-
-    ; update pad
+    ; update bitmap
+    lea     pad_update_table,a2    
     move.l  physbase, a0            ; a0 points to screen  
-    move.l  (a3),d1
-    add.l   #(160*8),d1
-    adda.l  d1,a0
-    movea.l d2,a4                   ; get the mask/copy function address
-    jsr     (a4)                    ; and run it!
+    move.l  (a3),d1                 ; get pad base offset on screen
+    add.l   #(160*8),d1             ; add pad relative offset
+    adda.l  d1,a0                   ; where to start to draw
+    jsr     pad_update_part
 .no_RLDU_change:
 
     ; ## OPTION and PAUSE ##
     move.l  d7,d0                   ; copy flags
     and.l   #JAGPAD_MASK_PO,d0      ; get pad bits
     beq.s   .no_PO_change
-
     move.l  d6,d0                   ; copy flags
     and.l   #JAGPAD_MASK_PO,d0      ; get pad bits
 
-    lea     po_update_table,a2
-.search_po_update:
-    move.l  (a2)+,d1
-    bmi.s   .no_PO_change           ; end of table, unknow value!
-
-    move.l  (a2)+,d2                ; read value
-    cmp.l   d0,d1                   ; match?
-    bne.s   .search_po_update       ; nope
-
-    ; update pad
+    ; update bitmap
+    lea     po_update_table,a2    
     move.l  physbase, a0            ; a0 points to screen  
-    move.l  (a3),d1
-    add.l   #(160*14)+(16/2),d1
-    adda.l  d1,a0
-    movea.l d2,a4                   ; get the mask/copy function address
-    jsr     (a4)                    ; and run it!
+    move.l  (a3),d1                 ; get pad base offset on screen
+    add.l   #(160*14)+(16/2),d1     ; add pad relative offset
+    adda.l  d1,a0                   ; where to start to draw
+    jsr     pad_update_part
 .no_PO_change:
 
     ; ## ABC ##
     move.l  d7,d0                   ; copy flags
     and.l   #JAGPAD_MASK_ABC,d0     ; get pad bits
     beq.s   .no_ABC_change
-
     move.l  d6,d0                   ; copy flags
     and.l   #JAGPAD_MASK_ABC,d0     ; get pad bits
 
-    lea     abc_update_table,a2
-.search_abc_update:
-    move.l  (a2)+,d1
-    bmi.s   .no_ABC_change          ; end of table, unknow value!
-
-    move.l  (a2)+,d2                ; read value
-    cmp.l   d0,d1                   ; match?
-    bne.s   .search_abc_update      ; nope
-
-    ; update abc
+    ; update bitmap
+    lea     abc_update_table,a2    
     move.l  physbase, a0            ; a0 points to screen  
-    move.l  (a3),d1
-    add.l   #(160*8)+(16/2),d1
-    adda.l  d1,a0
-    movea.l d2,a4                   ; get the mask/copy function address
-    jsr     (a4)                    ; and run it!
+    move.l  (a3),d1                 ; get pad base offset on screen
+    add.l   #(160*8)+(16/2),d1      ; add pad relative offset
+    adda.l  d1,a0                   ; where to start to draw
+    jsr     pad_update_part
 .no_ABC_change:
 
     ; ## NUMPAD LINE 1 ##
     move.l  d7,d0                   ; copy flags
     and.l   #JAGPAD_MASK_123,d0     ; get pad bits
     beq.s   .no_123_change
-
     move.l  d6,d0                   ; copy flags
     and.l   #JAGPAD_MASK_123,d0     ; get pad bits
 
-    lea     num_update_table,a2
-.search_num123_update:
-    move.l  (a2)+,d1
-    bmi.s   .no_123_change          ; end of table, unknow value!
-
-    move.l  (a2)+,d2                ; read value
-    cmp.l   d0,d1                   ; match?
-    bne.s   .search_num123_update   ; nope
-
-    ; update abc
+    ; update bitmap
+    lea     num_update_table_123,a2    
     move.l  physbase, a0            ; a0 points to screen  
-    move.l  (a3),d1
-    add.l   #(160*28)+(16/2),d1
-    adda.l  d1,a0
-    movea.l d2,a4                   ; get the mask/copy function address
-    jsr     (a4)                    ; and run it!
+    move.l  (a3),d1                 ; get pad base offset on screen
+    add.l   #(160*28)+(16/2),d1     ; add pad relative offset
+    adda.l  d1,a0                   ; where to start to draw
+    jsr     pad_update_part
 .no_123_change:
 
+    ; ## NUMPAD LINE 2 ##
+    move.l  d7,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_456,d0     ; get pad bits
+    beq.s   .no_456_change
+    move.l  d6,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_456,d0     ; get pad bits
 
+    ; update bitmap
+    lea     num_update_table_456,a2    
+    move.l  physbase, a0            ; a0 points to screen  
+    move.l  (a3),d1                 ; get pad base offset on screen
+    add.l   #(160*31)+(16/2),d1     ; add pad relative offset
+    adda.l  d1,a0                   ; where to start to draw
+    jsr     pad_update_part
+.no_456_change:
+
+    ; ## NUMPAD LINE 3 ##
+    move.l  d7,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_789,d0     ; get pad bits
+    beq.s   .no_789_change
+    move.l  d6,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_789,d0     ; get pad bits
+
+    ; update bitmap
+    lea     num_update_table_789,a2    
+    move.l  physbase, a0            ; a0 points to screen  
+    move.l  (a3),d1                 ; get pad base offset on screen
+    add.l   #(160*34)+(16/2),d1     ; add pad relative offset
+    adda.l  d1,a0                   ; where to start to draw
+    jsr     pad_update_part
+.no_789_change:
+
+    ; ## NUMPAD LINE 4 ##
+    move.l  d7,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_X0X,d0     ; get pad bits
+    beq.s   .no_x0x_change
+    move.l  d6,d0                   ; copy flags
+    and.l   #JAGPAD_MASK_X0X,d0     ; get pad bits
+
+    ; update bitmap
+    lea     num_update_table_x0x,a2    
+    move.l  physbase, a0            ; a0 points to screen  
+    move.l  (a3),d1                 ; get pad base offset on screen
+    add.l   #(160*37)+(16/2),d1     ; add pad relative offset
+    adda.l  d1,a0                   ; where to start to draw
+    jsr     pad_update_part
+.no_x0x_change:
 
 .next:
     lea     4(a3),a3
     dbra    d5,.loop_pad_update
-
-    ; adda.l  #((160*(155+28))+(32/2)),a0 ; num left
-    ; adda.l  #((160*(155+31))+(32/2)),a0 ; num center
-    ; adda.l  #((160*(155+34))+(32/2)),a0 ; num right
-
 
     move.w  palette,$ff8240         ; back to default background color!
 
@@ -193,6 +194,25 @@
     jsr     restore_context  
     jsr     exit_application
     ; GO BACK TO THE SYSTEM!
+
+
+; d0: current bits
+; a0: where to start to draw
+; a2: action table
+pad_update_part:
+
+.search_update:
+    move.l  (a2)+,d1                ; read compare mask entry
+    bmi.s   .no_change              ; end of table, unknow value!
+
+    move.l  (a2)+,a4                ; get the mask/copy function address
+
+    cmp.l   d0,d1                   ; match?
+    bne.s   .search_update          ; nope, check next
+    
+    jsr     (a4)                    ; and run it!
+.no_change:
+    rts
 
 
     ; 9 positions
@@ -221,16 +241,52 @@ abc_update_table:
     dc.l    $FFFFFFFF    
 
     ; 8 positions
-num_update_table:
+num_update_table_123:
     dc.l    $00000000,n0_copy
-    dc.l    $00800000,n1_copy
-    dc.l    $00020000,n2_copy
-    dc.l    $00820000,n3_copy
-    dc.l    $00000800,n4_copy
-    dc.l    $00800800,n5_copy
-    dc.l    $00020800,n6_copy
-    dc.l    $00820800,n7_copy
+    dc.l    $00000008,n1_copy
+    dc.l    $00000200,n2_copy
+    dc.l    $00000208,n3_copy
+    dc.l    $00008000,n4_copy
+    dc.l    $00008008,n5_copy
+    dc.l    $00008200,n6_copy
+    dc.l    $00008208,n7_copy
     dc.l    $FFFFFFFF    
+
+    ; 8 positions
+num_update_table_456:
+    dc.l    $00000000,n0_copy
+    dc.l    $00000004,n1_copy
+    dc.l    $00000100,n2_copy
+    dc.l    $00000104,n3_copy
+    dc.l    $00004000,n4_copy
+    dc.l    $00004004,n5_copy
+    dc.l    $00004100,n6_copy
+    dc.l    $00004104,n7_copy
+    dc.l    $FFFFFFFF    
+
+    ; 8 positions
+num_update_table_789:
+    dc.l    $00000000,n0_copy
+    dc.l    $00000002,n1_copy
+    dc.l    $00000080,n2_copy
+    dc.l    $00000082,n3_copy
+    dc.l    $00002000,n4_copy
+    dc.l    $00002002,n5_copy
+    dc.l    $00002080,n6_copy
+    dc.l    $00002082,n7_copy
+    dc.l    $FFFFFFFF    
+
+    ; 8 positions
+num_update_table_x0x:
+    dc.l    $00000000,n0_copy
+    dc.l    $00000001,n1_copy
+    dc.l    $00000040,n2_copy
+    dc.l    $00000041,n3_copy
+    dc.l    $00001000,n4_copy
+    dc.l    $00001001,n5_copy
+    dc.l    $00001040,n6_copy
+    dc.l    $00001041,n7_copy
+    dc.l    $FFFFFFFF            
 
     ; 4 positions
 po_update_table:
