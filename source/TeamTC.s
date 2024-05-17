@@ -1,7 +1,7 @@
 
 ;
 ; TeamTap Checker
-; Matthieu Barreteau (Matmook)
+; Matthieu Barreteau (Matmook of Jagware)
 ; May 2024
 
     jsr     save_context
@@ -10,33 +10,36 @@
     jsr     print_message
 
     jsr     detect_ste    
+
+    ; we may be in HIGH-RES?
+    lea     string_wrong_res,a3
+    cmp.b   #3,d0
+    beq.s   .go_to_debug_mode
+
+    ; we may be on a Falcon?
+    lea     string_falcon,a3
     cmp.b   #2,d0
-    beq.s   .this_is_a_falcon
+    beq.s   .go_to_debug_mode
+
+    ; we may not be on an STE?
+    lea     string_wrong_machine,a3
     cmp.b   #1,d0
     beq.s   .this_is_an_ste
 
-    ; that's not a compliant machine
-    lea     string_wrong_machine,a3
-    jsr     print_message
-    jsr     wait_key_press
-    jsr     restore_context  
-    jsr     exit_application
-    ; GO BACK TO THE SYSTEM! 
-
-.this_is_a_falcon:
-    ; not an STE, use text mode!
-    lea     string_falcon,a3
+.go_to_debug_mode:
+    ; that's not a compliant machine    
     jsr     print_message
     jsr     enter_debug_mode
-    jsr     restore_context  
-    jsr     exit_application
-    ; GO BACK TO THE SYSTEM!    
+    bra.w   .get_out
+    ; GO BACK TO THE SYSTEM! 
 
 .this_is_an_ste:
     lea     string_press_a_key,a3
     jsr     print_message
     jsr     wait_key_press
     jsr     switch_to_low_res
+
+    jsr     rasters_enable
 
     ; get screen buffer address
     move.w  #2, -(sp)               ; get physbase
@@ -50,16 +53,30 @@
     jsr     clear_screen 
         
     ; load palette
-    movem.l palette, d0-d7          ; put picture palette in d0-d7
+    movem.l pal_background, d0-d7   ; put picture palette in d0-d7
     movem.l d0-d7, $ff8240          ; move palette from d0-d7
 
     ; load bitmap
     move.l  physbase, a0            ; a0 points to screen    
-    move.l  #bitmap, a1             ; a1 points to picture
+    move.l  #bitmap_background, a1  ; a1 points to picture
     move.l  #(8000-1), d0           ; 8000 longwords to a screen
 .ldscr:
     move.l  (a1)+, (a0)+            ; move one longword to screen
     dbf     d0, .ldscr
+
+    ; show matmook logo
+    move.l  physbase, a0            ; a0 points to screen    
+    move.l  #bitmap_matmook, a1     ; a1 points to picture
+    move.l  #(480-1), d0            ; 480 longwords to a screen
+.ldmatmook:
+    move.l  (a1)+, (a0)+            ; move one longword to screen
+    dbra    d0, .ldmatmook
+
+    movem.l pal_matmook, d0-d7          ; put picture palette in d0-d7
+    movem.l d0-d7, $ff8240          ; move palette from d0-d7
+
+    move.w  pal_background,pal_matmook
+
 
     move.b  #$FF,TeamTapDetectionFlag ; initial fake state (force upgrade)
     jsr     TeamTap_detect          ; do a first detection
@@ -212,7 +229,9 @@
     lea     4(a3),a3
     dbra    d5,.loop_pad_update
 
-    move.w  palette,$ff8240         ; back to default background color!
+
+    ; back to default background color!
+    ; move.w  pal_background,$ff8240
 
     jsr     get_key_press
     tst.b   d0
@@ -223,11 +242,13 @@
     bne.s   .exit
 
     jsr     clear_screen 
+    jsr     rasters_disable
     jsr     restore_resolution
     jsr     enter_debug_mode
     bra.s   .get_out
 
 .exit:
+    jsr     rasters_disable
     jsr     restore_resolution
 .get_out:    
     jsr     restore_context  
@@ -321,6 +342,7 @@ update_teamtaps:
     .include "pads.s"
     .include "pixmap_mask.s"
     .include "hardware_detect.s"
+    .include "rasters.s"
 
 ; ***************************
 ; text functions
@@ -523,6 +545,10 @@ string_falcon:
     .dc.b   "Falcon detected, switching to text mode!",13,10,0
 
     .long
+string_wrong_res:
+    .dc.b   "Wrong monitor, switching to text mode!",13,10,0
+
+    .long
 string_wrong_machine:
     .dc.b   "Sorry, no Extended Joypad ports!",13,10,0
 
@@ -627,7 +653,9 @@ pad_position_table:
     dc.l    (208/2)+(160*155)
     dc.l    (240/2)+(160*109)
 
-    .include "pixmap.s"             ; we need some bitmaps!
+    ; we need some bitmaps!
+    .include "gfx_background.s" 
+    .include "gfx_matmook.s"
 
     .bss
     .long
