@@ -1230,8 +1230,8 @@ po1_update:
 	movem.l (a0),d0-d1
 	andi.l	#$EF3FEF3F,d0
 	andi.l	#$EF3FEF3F,d1
-	ori.l	#$00C01000,d0
-	ori.l	#$10C000C0,d1
+	ori.l	#$00401080,d0
+	ori.l	#$10C00040,d1
 	movem.l	d0-d1,(a0)
 	rts
 
@@ -1253,8 +1253,8 @@ po2_update:
 	movem.l (a0),d0-d1
 	andi.l	#$CFBFCFBF,d0
 	andi.l	#$CFBFCFBF,d1
-	ori.l	#$30000040,d0
-	ori.l	#$30403000,d1
+	ori.l	#$10002040,d0
+	ori.l	#$30401000,d1
 	movem.l	d0-d1,(a0)
 	rts
 
@@ -1276,8 +1276,8 @@ po3_update:
 	movem.l (a0),d0-d1
 	andi.l	#$CF3FCF3F,d0
 	andi.l	#$CF3FCF3F,d1
-	ori.l	#$30C00000,d0
-	ori.l	#$30C030C0,d1
+	ori.l	#$10402080,d0
+	ori.l	#$30C01040,d1
 	movem.l	d0-d1,(a0)
 	rts
 

@@ -4,6 +4,8 @@
 ; Matthieu Barreteau (Matmook of Jagware)
 ; May 2024
 
+    OFFSET_Y    .equ    20
+
     jsr     save_context
 
     lea     string_greetings,a3
@@ -51,15 +53,12 @@
 
     ; clears the screen to colour 0, background
     jsr     clear_screen 
-        
-    ; load palette
-    movem.l pal_background, d0-d7   ; put picture palette in d0-d7
-    movem.l d0-d7, $ff8240          ; move palette from d0-d7
 
     ; load bitmap
-    move.l  physbase, a0            ; a0 points to screen    
+    move.l  physbase, a0            ; a0 points to screen
+    adda.l  #(160*OFFSET_Y),a0
     move.l  #bitmap_background, a1  ; a1 points to picture
-    move.l  #(8000-1), d0           ; 8000 longwords to a screen
+    move.l  #(5560-1), d0
 .ldscr:
     move.l  (a1)+, (a0)+            ; move one longword to screen
     dbf     d0, .ldscr
@@ -72,20 +71,28 @@
     move.l  (a1)+, (a0)+            ; move one longword to screen
     dbra    d0, .ldmatmook
 
-    movem.l pal_matmook, d0-d7          ; put picture palette in d0-d7
-    movem.l d0-d7, $ff8240          ; move palette from d0-d7
-
-    move.w  pal_background,pal_matmook
-
+    ; load bitjagware
+    move.l  physbase, a0            ; a0 points to screen
+    adda.l  #(160*(200-32)),a0
+    move.l  #bitmap_jagware, a1     ; a1 points to picture
+    move.l  #(((160*32)/4)-1), d0
+.ldjagware:
+    move.l  (a1)+, (a0)+            ; move one longword to screen
+    dbf     d0, .ldjagware
 
     move.b  #$FF,TeamTapDetectionFlag ; initial fake state (force upgrade)
     jsr     TeamTap_detect          ; do a first detection
     move.b  d0,TeamTapDetectionFlag ; save initial state
 
+    move.w  pal_background, pal_color_0_backup
 .teamtap_state_changed:
-    move.w  #$FFF,$ff8240           ; make it blink!
+    ; make it blink!
+    move.w  #$FFF,pal_background
     jsr     wait_vbl
     jsr     update_teamtaps
+
+    ; restore middle background color!
+    move.w  pal_color_0_backup,pal_background
 
 .loop:    
     jsr     wait_vbl
@@ -156,7 +163,7 @@
     lea     abc_update_table,a2    
     move.l  physbase, a0            ; a0 points to screen  
     move.l  (a3),d1                 ; get pad base offset on screen
-    add.l   #(160*8)+(16/2),d1      ; add pad relative offset
+    add.l   #(160*7)+(16/2),d1      ; add pad relative offset
     adda.l  d1,a0                   ; where to start to draw
     jsr     pad_update_part
 .no_ABC_change:
@@ -276,8 +283,9 @@ pad_update_part:
 
 ; update TeamTaps picture
 update_teamtaps:
-    movem.l d0-d5/a0-a3,-(sp)
+    movem.l d0-d5/a0-a4,-(sp)
     move.l  physbase, a1            ; a0 points to screen 
+
 
     ; TeamTap A
     lea     notap_update,a2
@@ -290,21 +298,20 @@ update_teamtaps:
     lea     notap_delete,a2
     lea     notpad_delete,a3
 .update_team_tap_A:
+
+    ; teamtap
     move.l  a1, a0
-    adda.l  #((160*75)+(96/2)),a0
+    adda.l  #((160*(OFFSET_Y+13))+(96/2)),a0
     jsr     (a2)
 
+    ; all other teamtap ports (but the first)
+    lea     pad_position_table+4,a4
+    rept 3
     move.l  a1, a0
-    adda.l  #((160*120)+(64/2)),a0
+    adda.l  (a4)+,a0
+    adda.l  #((160*11)+(16/2)),a0
     jsr     (a3)
-
-    move.l  a1, a0
-    adda.l  #((160*120)+(128/2)),a0
-    jsr     (a3)
-
-    move.l  a1, a0
-    adda.l  #((160*166)+(96/2)),a0
-    jsr     (a3)
+    endr
 
     ; TeamTap B
     lea     notap_update,a2
@@ -316,23 +323,22 @@ update_teamtaps:
     lea     notap_delete,a2
     lea     notpad_delete,a3
 .update_team_tap_B:
+
+    ; teamtap
     move.l  a1, a0
-    adda.l  #((160*75)+((96+128)/2)),a0
+    adda.l  #((160*(OFFSET_Y+13))+((112+128)/2)),a0
     jsr     (a2)
    
+   ; all other teamtap ports (but the first)
+    lea     4(a4),a4
+    rept 3
     move.l  a1, a0
-    adda.l  #((160*120)+((64+128)/2)),a0
+    adda.l  (a4)+,a0
+    adda.l  #((160*11)+(16/2)),a0
     jsr     (a3)
+    endr
 
-    move.l  a1, a0
-    adda.l  #((160*120)+((128+128)/2)),a0
-    jsr     (a3)
-
-    move.l  a1, a0
-    adda.l  #((160*166)+((96+128)/2)),a0
-    jsr     (a3)
-
-    movem.l (sp)+,d0-d5/a0-a3
+    movem.l (sp)+,d0-d5/a0-a4
     rts
 
 ; ***************************
@@ -340,7 +346,7 @@ update_teamtaps:
 ; ***************************
     .include "debug.s"
     .include "pads.s"
-    .include "pixmap_mask.s"
+    .include "generated/gfx_masks.s"
     .include "hardware_detect.s"
     .include "rasters.s"
 
@@ -644,24 +650,26 @@ po_update_table:
 
     ; 8 pads
 pad_position_table:
-    dc.l    (16/2)+(160*155)
-    dc.l    (48/2)+(160*109)
-    dc.l    (80/2)+(160*155)
-    dc.l    (112/2)+(160*109)
-    dc.l    (144/2)+(160*155)
-    dc.l    (176/2)+(160*109)
-    dc.l    (208/2)+(160*155)
-    dc.l    (240/2)+(160*109)
+    dc.l    (16/2) +(160*(OFFSET_Y+94))
+    dc.l    (48/2) +(160*(OFFSET_Y+48))
+    dc.l    (80/2) +(160*(OFFSET_Y+94))
+    dc.l    (112/2)+(160*(OFFSET_Y+48))
+    dc.l    (160/2)+(160*(OFFSET_Y+94))
+    dc.l    (192/2)+(160*(OFFSET_Y+48))
+    dc.l    (224/2)+(160*(OFFSET_Y+94))
+    dc.l    (256/2)+(160*(OFFSET_Y+48))
 
     ; we need some bitmaps!
-    .include "gfx_background.s" 
-    .include "gfx_matmook.s"
+    .include "generated/gfx_background.s" 
+    .include "generated/gfx_matmook.s"
+    .include "generated/gfx_jagware.s"
 
     .bss
     .long
 physbase:               .ds.l    1
     .long
 hex_string:             .ds.b    8
+pal_color_0_backup:     .ds.w    1
 
 ; context backup
     .long

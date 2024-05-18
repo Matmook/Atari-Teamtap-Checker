@@ -47,6 +47,12 @@ def main(argv):
         sys.exit()
 
     full_width, full_height = ims.size
+
+    if name == "background":        
+        ims = ims.crop((0,61,full_width,full_height))
+        full_height = full_height - 61
+    # ims.show()
+    
     width = full_width
     height = full_height
 
@@ -74,9 +80,7 @@ def main(argv):
 
             read_pixels = True
             if name == "background":
-                if x >=288 and y >= 59:
-                    read_pixels = False
-                elif x < 32 and (y >= 50 and y <=148):
+                if x <=64 and y <= 41:
                     read_pixels = False
             if read_pixels:
                 for bit_num in range(0,16):

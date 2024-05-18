@@ -34,48 +34,48 @@ def set_bitplans( bitplans,color_index, bit):
 # main function  
 def main(argv):
 
-    ref_image = "source\\background.png"
+    ref_image = "source\\gfx\\background.png"
     ims = Image.open( ref_image )
     if ims.mode != "P":
         print("Indexed palette image only!")
         sys.exit()
 
     mask_list = [
-        ["c", "d0",     (16,  163,16,7),        [(304,59+0*7)]],
-        ["c", "d1",     (16,  163,16,7),        [(304,59+1*7)]],
-        ["c", "d2",     (16,  163,16,7),        [(304,59+2*7)]],
-        ["c", "d3",     (16,  163,16,7),        [(304,59+3*7)]],
-        ["c", "d4",     (16,  163,16,7),        [(304,59+4*7)]],
-        ["c", "d5",     (16,  163,16,7),        [(304,59+5*7)]],
-        ["c", "d6",     (16,  163,16,7),        [(304,59+6*7)]],
-        ["c", "d7",     (16,  163,16,7),        [(304,59+7*7)]],
-        ["c", "d8",     (16,  163,16,7),        [(304,59+8*7)]],
+        ["c", "d0",     (16,  163,16,7),        [(48,0*7)]],
+        ["c", "d1",     (16,  163,16,7),        [(48,1*7)]],
+        ["c", "d2",     (16,  163,16,7),        [(48,2*7)]],
+        ["c", "d3",     (16,  163,16,7),        [(48,3*7)]],
+        ["c", "d4",     (16,  163,16,7),        [(48,4*7)]],
+        ["c", "d5",     (16,  163,16,7),        [(48,5*7)]],
+        ["c", "d6",     (16,  163,16,7),        [(48,6*7)]],
+        ["c", "d7",     (16,  163,16,7),        [(48,7*7)]],
+        ["c", "d8",     (16,  163,16,7),        [(48,8*7)]],
 
-        ["u", "abc0",   (0,  138,32,11),       [(0,50+0*11)]],
-        ["u", "abc1",   (0,  138,32,11),       [(0,50+1*11)]],
-        ["u", "abc2",   (0,  138,32,11),       [(0,50+2*11)]],
-        ["u", "abc3",   (0,  138,32,11),       [(0,50+3*11)]],
-        ["u", "abc4",   (0,  138,32,11),       [(0,50+4*11)]],
-        ["u", "abc5",   (0,  138,32,11),       [(0,50+5*11)]],
-        ["u", "abc6",   (0,  138,32,11),       [(0,50+6*11)]],
-        ["u", "abc7",   (0,  138,32,11),       [(0,50+7*11)]],
+        ["u", "abc0",   (0,  88,32,11),        [(0,0*11)]],
+        ["u", "abc1",   (0,  88,32,11),        [(0,1*11)]],
+        ["u", "abc2",   (0,  88,32,11),        [(0,2*11)]],
+        ["u", "abc3",   (0,  88,32,11),        [(0,3*11)]],
+        ["u", "abc4",   (0,  88,32,11),        [(0,4*11)]],
+        ["u", "abc5",   (0,  88,32,11),        [(0,5*11)]],
+        ["u", "abc6",   (0,  88,32,11),        [(0,6*11)]],
+        ["u", "abc7",   (0,  88,32,11),        [(0,7*11)]],
 
-        ["u", "po0",    (304, 122,16,3),        [(304,125)]],
-        ["u", "po1",    (304, 122,16,3),        [(304,128)]],
-        ["u", "po2",    (304, 122,16,3),        [(304,131)]],
-        ["u", "po3",    (304, 122,16,3),        [(304,134)]],
+        ["u", "po0",    (48, 63,16,3),         [(48,66)]],
+        ["u", "po1",    (48, 63,16,3),         [(48,69)]],
+        ["u", "po2",    (48, 63,16,3),         [(48,72)]],
+        ["u", "po3",    (48, 63,16,3),         [(48,75)]],
         
-        ["c", "n0",     (304, 153,16,1),        [(304,154+0)]],
-        ["c", "n1",     (304, 153,16,1),        [(304,154+1)]],
-        ["c", "n2",     (304, 153,16,1),        [(304,154+2)]],
-        ["c", "n3",     (304, 153,16,1),        [(304,154+3)]],
-        ["c", "n4",     (304, 153,16,1),        [(304,154+4)]],
-        ["c", "n5",     (304, 153,16,1),        [(304,154+5)]],
-        ["c", "n6",     (304, 153,16,1),        [(304,154+6)]],
-        ["c", "n7",     (304, 153,16,1),        [(304,154+7)]],
+        ["c", "n0",     (48, 94,16,1),        [(48,95+0)]],
+        ["c", "n1",     (48, 94,16,1),        [(48,95+1)]],
+        ["c", "n2",     (48, 94,16,1),        [(48,95+2)]],
+        ["c", "n3",     (48, 94,16,1),        [(48,95+3)]],
+        ["c", "n4",     (48, 94,16,1),        [(48,95+4)]],
+        ["c", "n5",     (48, 94,16,1),        [(48,95+5)]],
+        ["c", "n6",     (48, 94,16,1),        [(48,95+6)]],
+        ["c", "n7",     (48, 94,16,1),        [(48,95+7)]],
 
-        ["ud", "notap",   (96, 74,16,16),       [(304,137)]],
-        ["ud", "notpad",  (64, 120,16,16),      [(304,137)]],
+        ["ud", "notap",   (96, 74,16,16),       [(48,78)]],
+        ["ud", "notpad",  (64, 120,16,16),      [(48,78)]],
     ]
 
     for mode,name, comp_source, comp_list in mask_list:
@@ -86,15 +86,25 @@ def main(argv):
             sys.exit()
         n16 = w//16
             
-        img_comp_source = ims.crop((x,y,x+w,y+h))        
-        
+        img_comp_source = ims.crop((x,y,x+w,y+h))
+
         for acomp in comp_list:
             xcomp,ycomp = acomp
             img_comp_test = ims.crop((xcomp,ycomp,xcomp+w,ycomp+h))
-            # img_comp_test.show()
-            diff = ImageChops.difference(img_comp_source, img_comp_test)  
-            # print(xcomp,ycomp)
-            # diff.show()          
+            
+            # create mask (ImageChops.difference does not work on indexed pictures)
+            diff = img_comp_source.copy()  # easy way to create the same picture type
+            for y in range(0,h):
+                for x in range(0,w):
+                    col1 = img_comp_test.getpixel((x,y))
+                    col2 = img_comp_source.getpixel((x,y))
+                    if col1 == col2:
+                        diff.putpixel((x,y),1)
+                    else:
+                        diff.putpixel((x,y),0)
+
+            # if name.startswith("abc0"):                
+            #     diff.show()                 
                         
             # create masks
             mask_delete = f"{name}_delete:\n"
@@ -114,11 +124,10 @@ def main(argv):
                         bp16_copy[nx] = set_bitplans(bp16_copy[nx], color_index, x)
 
                         # cleaning mask
-                        color_index = diff.getpixel((x+(nx*16),y))                   
-                       
                         mask[nx] = mask[nx] << 1
-                        if not color_index:
-                            mask[nx] |= 1
+                        is_masked = diff.getpixel((x+(nx*16),y))                        
+                        if is_masked == 1:
+                            mask[nx] = mask[nx] | 1
                         else:
                             # unset mask                        
                             color_index = img_comp_source.getpixel((x+(nx*16),y))   

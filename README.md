@@ -1,2 +1,2 @@
 # Atari-Teamtap-Checker
- An STE/Falcon appliction to test Extended Joystick ports
+ An STE/Falcon application to test Extended Joystick ports
