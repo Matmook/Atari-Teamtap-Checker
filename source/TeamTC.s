@@ -561,7 +561,9 @@ string_wrong_machine:
     .long
 string_greetings:
     .dc.b   "Extended Joypad ports Tester by Matmook",13,10
-    .dc.b   "Matthieu Barreteau - May 2024",13,10,13,10,0
+    .dc.b   "Matthieu Barreteau - May 2024",13,10,13,10
+    .dc.b   "Design: not found!",13,10,13,10
+    .dc.b   "Sound: Fadest compliant!",13,10,13,10,0
 
     .long
 string_press_a_key:
